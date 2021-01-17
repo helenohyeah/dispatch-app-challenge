@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/helenohyeah/rose-rocket-coding-challenge/issues"
   },
-  "homepage": "https://github.com/helenohyeah/rose-rocket-coding-challenge#readme"
+  "homepage": "https://github.com/helenohyeah/rose-rocket-coding-challenge#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }

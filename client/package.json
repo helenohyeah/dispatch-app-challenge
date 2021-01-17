@@ -1,7 +1,24 @@
 {
-  "name": "client",
+  "name": "rose-rocket-challenge-client",
   "version": "0.1.0",
+  "description": "Client for my Rose Rocket challenge submission",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/helenohyeah/rose-rocket-coding-challenge.git"
+  },
+  "author": "Helen Ouyang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/helenohyeah/rose-rocket-coding-challenge/issues"
+  },
+  "homepage": "https://github.com/helenohyeah/rose-rocket-coding-challenge#readme",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
@@ -10,12 +27,6 @@
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

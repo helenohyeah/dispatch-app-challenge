@@ -4,7 +4,7 @@ import axios from 'axios';
 export default function Tasks() {
   axios.defaults.baseURL = 'http://localhost:8080';
   useEffect(() => {
-    axios.get('/tasks')
+    axios.get('/api/tasks')
       .then(res => console.log(res))
       .catch(err => console.log(err));
   }, []);

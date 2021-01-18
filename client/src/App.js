@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Map from './components/Map';
 
 import './App.css';
 
@@ -21,15 +22,16 @@ function Form() {
 
 function App() {
 
-  axios.defaults.baseURL = 'http://localhost:8080';
-  axios.get('/')
-    .then(res => console.log('Response:', res))
-    .catch(err => console.log('Error:', err));
+  // axios.defaults.baseURL = 'http://localhost:8080';
+  // axios.get('/')
+  //   .then(res => console.log('Response:', res))
+  //   .catch(err => console.log('Error:', err));
 
   return (
     <>
       <h1>Hello Dispatcher</h1>
       <Form />
+      <Map />
     </>
   );
 }

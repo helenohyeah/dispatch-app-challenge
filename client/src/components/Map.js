@@ -1,7 +1,7 @@
 import { Loader } from '@googlemaps/js-api-loader';
 
 export default function Map() {
-  
+
   let map;
   const mapOptions = {
     center: { lat: -34.397, lng: 150.644 },
@@ -14,7 +14,7 @@ export default function Map() {
   });
   loader.load().then(() => {
     map = new window.google.maps.Map(document.getElementById('map'), mapOptions);
-    console.log(map);
+    // console.log(map);
   }).catch(err => console.log(err));
 
   return (

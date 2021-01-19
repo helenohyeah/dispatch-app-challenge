@@ -9,7 +9,7 @@ export default function Map() {
   };
 
   const loader = new Loader({
-    apiKey: 'AIzaSyBb5ldEkUK3bN4siztJ2DvWX_Fi6uu9aeA',
+    apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     version: 'weekly'
   });
   loader.load().then(() => {

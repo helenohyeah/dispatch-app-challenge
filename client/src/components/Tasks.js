@@ -3,13 +3,13 @@
 export default function Tasks(props) {
 
   const tasks = props.data;
-  console.log('tasks:\n', tasks);
+  // console.log('tasks:\n', tasks);
   const tasksList = tasks.map(task => {
     return (<li key={task.id}>
-      {task.start} to {task.end} - Freight: {task.freight}
+      {task.startLat}, {task.startLng} to {task.endLat}, {task.endLng} | Freight: {task.freight}
     </li>);
   });
-  console.log('tasksList:\n', tasksList);
+  // console.log('tasksList:\n', tasksList);
 
   return (
     <>

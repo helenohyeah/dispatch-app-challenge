@@ -1,16 +1,9 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import useTasks from '../hooks/useTasks';
 
 export default function Tasks() {
 
-  const [tasks, setTasks] = useState([]);
-
-  axios.defaults.baseURL = 'http://localhost:8080';
-  useEffect(() => {
-    axios.get('/api/tasks')
-      .then(res => setTasks(res.data))
-      .catch(err => console.log(err));
-  }, []);
+  const { tasks } = useTasks();
+  // console.log(tasks);
   
   const tasksList = tasks.map(task => <li key={task.id}>{task.start} to {task.end} - Freight: {task.freight}</li>);
 

@@ -11,6 +11,12 @@
       "end": "Ottawa",
       "freight": "Groceries",
       "id": 2
+    },
+    {
+      "start": "Vancouver",
+      "end": "Kelowna",
+      "freight": "Blueberries",
+      "id": 3
     }
   ]
 }

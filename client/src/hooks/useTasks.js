@@ -1,6 +1,7 @@
 import { useReducer, useEffect } from 'react';
 import axios from 'axios';
 import isEqual from 'lodash.isequal';
+import omit from 'lodash.omit';
 
 // Action types
 const GET_TASKS = 'GET_TASKS';
@@ -12,7 +13,7 @@ const taskReducer = (state, action) => {
     case GET_TASKS:
       return [ ...action.tasks ];
     case CREATE_TASK:
-      return [ ...state, action.task ];
+      return [ ...state, action.newTask ];
     default:
       return state;
   }
@@ -40,12 +41,15 @@ export default function useTasks() {
   function createTask(task) {
     // console.log('create this:', task);
     axios.post('/api/tasks', task)
-      .then(() => dispatchTasks({ type: CREATE_TASK, task }));
+      .then((res) => {
+        const newTask = res.data;
+        dispatchTasks({ type: CREATE_TASK, newTask })
+      });
   };
 
   // Check to prevent dispatcher from creating identical movement task
   function isDuplicate(taskToCheck) {
-    return tasks.some(task => isEqual(task, taskToCheck));
+    return tasks.some(task => isEqual(omit(task, ['id']), taskToCheck));
   };
 
   return {

@@ -2,10 +2,14 @@
 
 export default function Tasks(props) {
 
-  // const { tasks } = useTasks();
-  // console.log(tasks);
   const tasks = props.data;
-  const tasksList = tasks.map(task => <li key={task.id}>{task.start} to {task.end} - Freight: {task.freight}</li>);
+  console.log('tasks:\n', tasks);
+  const tasksList = tasks.map(task => {
+    return (<li key={task.id}>
+      {task.start} to {task.end} - Freight: {task.freight}
+    </li>);
+  });
+  console.log('tasksList:\n', tasksList);
 
   return (
     <>

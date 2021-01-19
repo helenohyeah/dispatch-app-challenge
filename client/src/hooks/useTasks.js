@@ -1,5 +1,6 @@
 import { useReducer, useEffect } from 'react';
 import axios from 'axios';
+import isEqual from 'lodash.isequal';
 
 // Action types
 const GET_TASKS = 'GET_TASKS';
@@ -7,7 +8,6 @@ const CREATE_TASK = 'CREATE_TASK';
 
 // Manage state transitions for tasks
 const taskReducer = (state, action) => {
-  
   switch (action.type) {
     case GET_TASKS:
       return [ ...action.tasks ];
@@ -43,8 +43,14 @@ export default function useTasks() {
       .then(() => dispatchTasks({ type: CREATE_TASK, task }));
   };
 
+  // Check to prevent dispatcher from creating identical movement task
+  function isDuplicate(taskToCheck) {
+    return tasks.some(task => isEqual(task, taskToCheck));
+  };
+
   return {
     tasks,
-    createTask
+    createTask,
+    isDuplicate
   };
 }

@@ -4,8 +4,20 @@ export default function Form(props) {
 
   const [task, setTask] = useState({});
 
-  const handleSubmit = props.handleSubmit;
+  const handleSubmit = (task) => {
+    // Validate task isn't a duplicate
+    if (props.handleValidation(task)) {
+      alert('Duplicate task');
+    } else {
+      // Create new task
+      props.handleNewTask(task);
+      // Clear form
+      setTask({});
+    }
+  };
+
   const handleChange = (e, type) => {
+    // Updates form fields
     setTask(prev => {
       return { ...prev, [type]: e.target.value }
     });

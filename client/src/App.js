@@ -8,13 +8,14 @@ import './App.css';
 
 function App() {
 
-  const { tasks, createTask } = useTasks();
+  const { tasks, createTask, isDuplicate } = useTasks();
 
   return (
     <>
       <h1>Hello Dispatcher</h1>
       <Form
-        handleSubmit={createTask}
+        handleNewTask={createTask}
+        handleValidation={isDuplicate}
       />
       {/* <Map /> */}
       <Tasks

@@ -1,16 +1,16 @@
 {
-  "name": "rose-rocket-challenge-client",
+  "name": "dispatch-app-challenge-client",
   "version": "0.1.0",
-  "description": "Client for my Rose Rocket challenge submission",
+  "description": "Client for my dispatch app",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/helenohyeah/rose-rocket-coding-challenge.git"
+    "url": "git+https://github.com/helenohyeah/dispatch-app-challenge.git"
   },
   "author": "Helen Ouyang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/helenohyeah/rose-rocket-coding-challenge/issues"
+    "url": "https://github.com/helenohyeah/dispatch-app-challenge/issues"
   },
   "scripts": {
     "start": "react-scripts start",

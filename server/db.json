@@ -17,6 +17,24 @@
       "end": "Kelowna",
       "freight": "Blueberries",
       "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "id": 7
+    },
+    {
+      "start": "Toronto",
+      "end": "Brampton",
+      "freight": "Cheese",
+      "id": 8
     }
   ]
 }

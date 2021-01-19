@@ -1,16 +1,41 @@
-export default function Form() {
-  const url = 'http://localhost:8080/api/tasks';
+import { useState } from 'react';
+
+export default function Form(props) {
+
+  const [task, setTask] = useState({});
+
+  const handleSubmit = props.handleSubmit;
+  const handleChange = (e, type) => {
+    setTask(prev => {
+      return { ...prev, [type]: e.target.value }
+    });
+  };
+  
   return (
     <>
       <h2>Create New Task</h2>
-      <form action={url} method='POST'>
-        <label htmlFor='start'>Start Location:</label>
-        <input type='text' name='start'></input>
-        <label htmlFor='end'>End Location:</label>
-        <input type='text' name='end'></input>
-        <label htmlFor='freight'>Freight Description:</label>
-        <input type='text' name='freight'></input>
-        <input type='submit' value='Create'></input>
+      <form onSubmit={e => e.preventDefault()}>
+        <label>Start Location:</label>
+        <input 
+          type='text'
+          value={task.start || ''}
+          onChange={e => handleChange(e, 'start')}
+        ></input>
+        <label>End Location:</label>
+        <input 
+          type='text' 
+          value={task.end || ''}
+          onChange={e => handleChange(e, 'end')}
+        ></input>
+        <label>Freight Description:</label>
+        <input 
+          type='text' 
+          value={task.freight || ''}
+          onChange={e => handleChange(e, 'freight')}
+        ></input>
+        <button 
+          onClick={() => handleSubmit(task)}
+        >Create</button>
       </form>
     </>
   );

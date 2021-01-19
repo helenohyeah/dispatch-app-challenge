@@ -2,21 +2,24 @@ import Form from './components/Form';
 import Map from './components/Map';
 import Tasks from './components/Tasks';
 
+import useTasks from './hooks/useTasks';
+
 import './App.css';
 
 function App() {
 
-  // axios.defaults.baseURL = 'http://localhost:8080';
-  // axios.get('/')
-  //   .then(res => console.log('Response:', res))
-  //   .catch(err => console.log('Error:', err));
+  const { tasks, createTask } = useTasks();
 
   return (
     <>
       <h1>Hello Dispatcher</h1>
-      <Form />
+      <Form
+        handleSubmit={createTask}
+      />
       {/* <Map /> */}
-      <Tasks />
+      <Tasks
+        data={tasks}
+      />
     </>
   );
 }

@@ -1,8 +1,8 @@
-import Form from './components/Form';
-import Map from './components/Map';
-import Tasks from './components/Tasks';
+import Form from './Form';
+import Map from './Map';
+import Tasks from './Tasks';
 
-import useTasks from './hooks/useTasks';
+import useTasks from '../hooks/useTasks';
 
 import './App.css';
 

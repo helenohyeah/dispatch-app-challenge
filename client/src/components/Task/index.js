@@ -1,6 +1,7 @@
 import Empty from './Empty';
 import Form from './Form';
 import Show from './Show';
+import Load from './Load';
 
 import useVisualMode from '../../hooks/useVisualMode';
 
@@ -21,6 +22,7 @@ export default function Task(props) {
     if (props.onSave(task)) {
       alert('Duplicate task');
     } else {
+      transition(SAVING);
       props.onCreate(task)
         .then(() => transition(SHOW));
     }
@@ -46,6 +48,7 @@ export default function Task(props) {
           onSave={save}
         />
       )} */}
+      {mode === SAVING && <Load>Saving...</Load>}
     </article>
   );
 }

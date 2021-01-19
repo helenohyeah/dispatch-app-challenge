@@ -22,7 +22,7 @@ export default function Task(props) {
     if (props.onSave(task)) {
       alert('Duplicate task');
     } else if (mode === EDIT) {
-      // *****check for duplicate but make exception to itself
+      // *****check for duplicate but make exception to itself (i.e no change made)
       transition(SAVING);
       props.onEdit(task)
         .then(() => transition(SHOW));

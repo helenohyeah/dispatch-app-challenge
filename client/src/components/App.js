@@ -8,12 +8,22 @@ import './App.css';
 
 function App() {
 
-  const { tasks, createTask, isDuplicate } = useTasks();
+  const { tasks, createTask } = useTasks();
+
+  const tasksList = tasks.map(task => {
+    return (
+      <Task
+        data={task}
+        onCreate={createTask}
+      />
+    );
+  });
+
 
   return (
     <>
       <h1>Hello Dispatcher</h1>
-      <Task />
+      {tasksList}
       {/* <Form
         handleNewTask={createTask}
         handleValidation={isDuplicate}

@@ -17,10 +17,10 @@ function App() {
         handleNewTask={createTask}
         handleValidation={isDuplicate}
       />
-      {/* <Map /> */}
       <Tasks
         data={tasks}
       />
+      <Map />
     </>
   );
 }

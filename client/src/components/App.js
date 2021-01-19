@@ -1,6 +1,6 @@
-import Form from './Form';
+// import Form from './Task/Form';
 import Map from './Map';
-import Tasks from './Tasks';
+import Task from './Task';
 
 import useTasks from '../hooks/useTasks';
 
@@ -13,14 +13,15 @@ function App() {
   return (
     <>
       <h1>Hello Dispatcher</h1>
-      <Form
+      <Task />
+      {/* <Form
         handleNewTask={createTask}
         handleValidation={isDuplicate}
-      />
-      <Tasks
+      /> */}
+      {/* <Tasks
         data={tasks}
-      />
-      <Map />
+      /> */}
+      {/* <Map /> */}
     </>
   );
 }

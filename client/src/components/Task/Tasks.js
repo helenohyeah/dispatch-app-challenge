@@ -1,4 +1,4 @@
-import TaskButton from './TaskButton';
+import TaskButton from './Button';
 
 export default function Tasks(props) {
 

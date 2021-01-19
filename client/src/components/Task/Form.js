@@ -11,17 +11,17 @@ export default function Form(props) {
     });
   };
 
-  const handleSubmit = (task) => {
-    // Validate task isn't a duplicate
-    if (props.handleValidation(task)) {
-      alert('Duplicate task');
-    } else {
-      // Create new task
-      props.handleNewTask(task);
-      // Clear form
-      setTask({});
-    }
-  };
+  // const handleSubmit = (task) => {
+  //   // Validate task isn't a duplicate
+  //   if (props.handleValidation(task)) {
+  //     alert('Duplicate task');
+  //   } else {
+  //     // Create new task
+  //     props.handleNewTask(task);
+  //     // Clear form
+  //     setTask({});
+  //   }
+  // };
   
   return (
     <>
@@ -60,7 +60,7 @@ export default function Form(props) {
           onChange={e => handleChange(e, 'freight')}
         ></input>
         <button 
-          onClick={() => handleSubmit(task)}
+          onClick={() => props.onSave(task)}
         >Create</button>
       </form>
     </>

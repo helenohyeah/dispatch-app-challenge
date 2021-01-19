@@ -6,6 +6,7 @@ import omit from 'lodash.omit';
 // Action types
 const GET_TASKS = 'GET_TASKS';
 const CREATE_TASK = 'CREATE_TASK';
+const UPDATE_TASK = 'UPDATE_TASK';
 
 // Manage state transitions for tasks
 const taskReducer = (state, action) => {
@@ -14,6 +15,8 @@ const taskReducer = (state, action) => {
       return [ ...action.tasks ];
     case CREATE_TASK:
       return [ ...state, action.newTask ];
+    case UPDATE_TASK:
+      return state.map(task => task.id === action.updatedTask.id ? action.updatedTask : task);
     default:
       return state;
   }
@@ -39,14 +42,23 @@ export default function useTasks() {
 
   // Create a new task and add to state
   function createTask(task) {
-    // console.log('create this:', task);
     return axios.post('/api/tasks', task)
-      .then((res) => {
+      .then(res => {
         const newTask = res.data;
         dispatchTasks({ type: CREATE_TASK, newTask })
       });
   };
 
+  // Edit an existing task and update state
+  function updateTask(task) {
+    return axios.put(`/api/tasks/${task.id}`, task)
+      .then(res => {
+        const updatedTask = res.data;
+        dispatchTasks({ type: UPDATE_TASK, updatedTask });
+      });
+  }
+
+  // Check if task already exists
   function isDuplicateTask(taskToCheck) {
     return tasks.some(task => isEqual(omit(task, ['id']), taskToCheck));
   }
@@ -54,6 +66,7 @@ export default function useTasks() {
   return {
     tasks,
     createTask,
+    updateTask,
     isDuplicateTask
   };
 }

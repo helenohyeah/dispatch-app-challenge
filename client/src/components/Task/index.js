@@ -21,6 +21,11 @@ export default function Task(props) {
   const save = (task) => {
     if (props.onSave(task)) {
       alert('Duplicate task');
+    } else if (mode === EDIT) {
+      // *****check for duplicate but make exception to itself
+      transition(SAVING);
+      props.onEdit(task)
+        .then(() => transition(SHOW));
     } else {
       transition(SAVING);
       props.onCreate(task)
@@ -42,12 +47,12 @@ export default function Task(props) {
           onEdit={() => transition(EDIT)}
         />
       )}
-      {/* {mode === EDIT && (
+      {mode === EDIT && (
         <Form
           task={props.data}
           onSave={save}
         />
-      )} */}
+      )}
       {mode === SAVING && <Load>Saving...</Load>}
     </article>
   );

@@ -2,7 +2,8 @@ import { useState } from 'react';
 
 export default function Form(props) {
 
-  const [task, setTask] = useState({});
+  // Set initial state to task data if editing
+  const [task, setTask] = useState(props.task ? props.task : {});
 
   // Updates form fields
   const handleChange = (e, type) => {

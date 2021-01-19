@@ -3,8 +3,6 @@ import Form from './Form';
 import Show from './Show';
 
 import useVisualMode from '../../hooks/useVisualMode';
-// import useTasks from '../../hooks/useTasks';
-import { isDuplicateTask } from '../../helpers';
 
 // Visual modes
 const EMPTY = 'EMPTY';
@@ -16,11 +14,11 @@ const SAVING = 'SAVING';
 export default function Task(props) {
 
   const { mode, transition } = useVisualMode(props.data ? SHOW : EMPTY);
-  // const { createTask, isDuplicate } = useTasks();
+  // console.log(props.data);
 
   // Validate and save task
   const save = (task) => {
-    if (isDuplicateTask(props.data, task)) {
+    if (props.onSave(task)) {
       alert('Duplicate task');
     } else {
       props.onCreate(task)

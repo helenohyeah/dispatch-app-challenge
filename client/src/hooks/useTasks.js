@@ -1,6 +1,7 @@
 import { useReducer, useEffect } from 'react';
 import axios from 'axios';
-
+import isEqual from 'lodash.isequal';
+import omit from 'lodash.omit';
 
 // Action types
 const GET_TASKS = 'GET_TASKS';
@@ -46,8 +47,13 @@ export default function useTasks() {
       });
   };
 
+  function isDuplicateTask(taskToCheck) {
+    return tasks.some(task => isEqual(omit(task, ['id']), taskToCheck));
+  }
+
   return {
     tasks,
-    createTask
+    createTask,
+    isDuplicateTask
   };
 }

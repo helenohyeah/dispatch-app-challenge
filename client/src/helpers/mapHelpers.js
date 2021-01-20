@@ -38,7 +38,20 @@ const getLatLngCenter = (coords) => {
 
 // Returns an array of coordinates given tasks
 const getCoords = (tasks) => {
+  
+  if(!tasks[0]) return null;
 
+  const isSameCoord = (a, b) => a[0] === b[0] && a[1] === b[1];
+  
+  const coords = [];
+  tasks.forEach(task => {
+    const startCoord = [task.startLat, task.startLng];
+    const endCoord = [task.endLat, task.endLng];
+    if(!coords.some(coord => isSameCoord(coord, startCoord)))  coords.push(startCoord);
+    if(!coords.some(coord => isSameCoord(coord, endCoord)))  coords.push(endCoord);
+  });
+  
+  return coords;
 }
 
 export { getLatLngCenter, getCoords };

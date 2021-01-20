@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-export default function Form(props) {
+export default function Edit(props) {
 
-  // Set initial state to task data if editing
-  const [task, setTask] = useState(props.task ? props.task : {});
+  // Set initial state to task data
+  const [task, setTask] = useState(props.task);
 
   // Updates form fields
   const handleChange = (e, type) => {
@@ -14,7 +14,7 @@ export default function Form(props) {
   
   return (
     <>
-      <h2>Create New Task</h2>
+      <h2>Edit Task</h2>
       <form onSubmit={e => e.preventDefault()}>
         <label>Start Latitude:</label>
         <input 
@@ -50,7 +50,7 @@ export default function Form(props) {
         ></input>
         <button 
           onClick={() => props.onSave(task)}
-        >Create</button>
+        >Save Changes</button>
       </form>
     </>
   );

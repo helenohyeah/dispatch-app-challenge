@@ -71,7 +71,7 @@ export default function useTasks() {
 
   // Check if task already exists
   function isDuplicateTask(taskToCheck) {
-    return tasks.some(task => isEqual(omit(task, ['id']), taskToCheck));
+    return tasks.some(task => isEqual(omit(task, ['id']), omit(taskToCheck, ['id'])));
   }
 
   return {

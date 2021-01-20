@@ -16,6 +16,7 @@ function App() {
       <Task
         key={task.id}
         data={task}
+        onSave={isDuplicateTask}
         onEdit={updateTask}
         onDelete={deleteTask}
       />

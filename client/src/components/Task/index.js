@@ -1,6 +1,7 @@
-import Form from './Form';
+import isEqual from 'lodash.isequal';
+
+import Edit from './Edit';
 import Show from './Show';
-import Load from './Load';
 
 import useVisualMode from '../../hooks/useVisualMode';
 
@@ -13,8 +14,23 @@ export default function Task(props) {
 
   const { mode, transition } = useVisualMode(SHOW);
 
+  // Validate and save edits
+  const save = (task) => {
+    // console.log('save edits:', task);
+    // console.log(props.onSave(task));
+    if(isEqual(props.data, task)) {
+      transition(SHOW);
+    } else if(props.onSave(task)) {
+      alert('Duplicate task');
+    } else {
+      // console.log('saving edits');
+      transition(SAVING);
+      props.onEdit(task)
+        .then(() => transition(SHOW));
+    }
+  };
+
   // Delete task
-  // ****add confirmation later?
   const deleteTask = (id) => {
     props.onDelete(id);
   };
@@ -28,13 +44,13 @@ export default function Task(props) {
           onDelete={deleteTask}
         />
       )}
-      {/* {mode === EDIT && (
-        <Form
+      {mode === EDIT && (
+        <Edit
           task={props.data}
           onSave={save}
         />
       )}
-      {mode === SAVING && <Load>Saving changes...</Load>} */}
+      {mode === SAVING && <p>Saving changes...</p>}
     </article>
   );
 }

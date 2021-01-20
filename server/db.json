@@ -1,3 +1,28 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "id": 1,
+      "startLat": 45.502,
+      "startLng": -73.567,
+      "endLat": 43.653,
+      "endLng": -79.383,
+      "freight": "Montreal->Toronto, Produce"
+    },
+    {
+      "id": 2,
+      "startLat": 45.422,
+      "startLng": -75.697,
+      "endLat": 43.653,
+      "endLng": -79.383,
+      "freight": "Ottawa->Toronto, Groceries"
+    },
+    {
+      "id": 3,
+      "startLat": 37.978,
+      "startLng": -122.031,
+      "endLat": 45.502,
+      "endLng": -73.567,
+      "freight": "Concord->Montreal, Produce"
+    }
+  ]
 }

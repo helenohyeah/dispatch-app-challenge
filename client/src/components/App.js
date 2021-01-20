@@ -6,7 +6,7 @@ import useTasks from '../hooks/useTasks';
 
 import './App.css';
 
-function App() {
+export default function App() {
 
   const { tasks, addTask, updateTask, deleteTask, isDuplicateTask } = useTasks();
   
@@ -25,8 +25,8 @@ function App() {
     });
   // console.log('tasksList:', tasksList);
     
-    return (
-      <>
+  return (
+    <>
       <h1>Hello Dispatcher</h1>
       <Create
         onSave={isDuplicateTask}
@@ -39,5 +39,3 @@ function App() {
     </>
   );
 }
-
-export default App;

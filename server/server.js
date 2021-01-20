@@ -31,36 +31,6 @@ server.use((req, res, next) => {
 });
 server.use('/api', router);
 
-// Mock Data
-// const tasks = [{
-//   "id": 1,
-//   "start": {
-//     "city": "Toronto",
-//     "lat": 43.653,
-//     "lng": -79.383
-//   },
-//   "end": {
-//     "city": "Montreal",
-//     "lat": 45.502,
-//     "lng": -73.567
-//   },
-//   "frieght": "Groceries"
-// },
-// {
-//   "id": 2,
-//   "start": {
-//     "city": "Toronto",
-//     "lat": 43.653,
-//     "lng": -79.383
-//   },
-//   "end": {
-//     "city": "Ottawa",
-//     "lat": 45.421,
-//     "lng": -75.697
-//   },
-//   "freight": "Parcels"
-// }]
-
 server.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);
 });

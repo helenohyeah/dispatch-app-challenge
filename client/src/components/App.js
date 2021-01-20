@@ -1,5 +1,6 @@
 import Task from './Task';
 import Create from './Create';
+import Map from './Map';
 
 import useTasks from '../hooks/useTasks';
 
@@ -32,6 +33,9 @@ function App() {
         onAdd={addTask}
       />
       {tasksList}
+      <Map 
+        data={tasks}
+      />
     </>
   );
 }

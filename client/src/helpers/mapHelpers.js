@@ -23,10 +23,10 @@ const getLatLngCenter = (coords) => {
   // Normalise (average) resulting vector
   const avgX = sumX / coords.length;
   const avgY = sumY / coords.length;
-  const avgZ = sumY / coords.length;
+  const avgZ = sumZ / coords.length;
 
   // Convert back to latitude longitude coordinates
-  const hyp = Math.sqrt(avgX * avgX + avgY + avgY);
+  const hyp = Math.sqrt(avgX * avgX + avgY * avgY);
   const lat = Math.atan2(avgZ, hyp);
   const lng = Math.atan2(avgY, avgX);
 

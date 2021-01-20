@@ -1,4 +1,4 @@
-import { getCoords } from '../mapHelpers';
+import { getCoords, getLatLngCenter } from '../mapHelpers';
 
 // Mock data
 const tasks = [
@@ -20,7 +20,7 @@ const tasks = [
   }
 ];
 
-// Tests for get Coords
+// Tests for getCoords
 test('getCoords returns an array', () => {
   const result = getCoords(tasks);
   expect(Array.isArray(result)).toBe(true);

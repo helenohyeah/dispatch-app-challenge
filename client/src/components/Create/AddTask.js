@@ -1,15 +1,9 @@
-import { useState } from 'react';
+import useTask from '../../hooks/useTask';
 
 export default function AddTask(props) {
 
-  const [task, setTask] = useState({});
-
-  // Updates form fields
-  const handleChange = (e, type) => {
-    setTask(prev => {
-      return { ...prev, [type]: e.target.value }
-    });
-  };
+  const { task, handleTaskChange } = useTask({});
+  console.log(task);
 
   return (
     <>
@@ -17,35 +11,40 @@ export default function AddTask(props) {
       <form onSubmit={e => e.preventDefault()}>
         <label>Start Latitude:</label>
         <input 
-          type='text'
+          type='number'
+          name='start-lat'
           value={task.startLat || ''}
-          onChange={e => handleChange(e, 'startLat')}
+          onChange={e => handleTaskChange(e)}
         ></input>
         <label>Start Longitude:</label>
         <input 
-          type='text'
+          type='number'
+          name='start-lng'
           value={task.startLng || ''}
-          onChange={e => handleChange(e, 'startLng')}
+          onChange={e => handleTaskChange(e)}
         ></input>
         <br />
         <label>End Latitude:</label>
         <input 
-          type='text' 
+          type='number'
+          name='end-lat'
           value={task.endLat || ''}
-          onChange={e => handleChange(e, 'endLat')}
+          onChange={e => handleTaskChange(e)}
         ></input>
         <label>End Longitude:</label>
         <input 
-          type='text' 
+          type='number'
+          name='end-lng'
           value={task.endLng || ''}
-          onChange={e => handleChange(e, 'endLng')}
+          onChange={e => handleTaskChange(e)}
         ></input>
         <br />
         <label>Freight Description:</label>
         <input 
-          type='text' 
+          type='text'
+          name='freight'
           value={task.freight || ''}
-          onChange={e => handleChange(e, 'freight')}
+          onChange={e => handleTaskChange(e)}
         ></input>
         <button 
           onClick={() => props.onSave(task)}

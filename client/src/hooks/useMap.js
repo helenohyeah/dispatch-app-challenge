@@ -12,10 +12,12 @@ export default function useMap() {
         <Marker
           key={`${task.id}-start`}
           position={start}
+          icon={'http://maps.google.com/mapfiles/ms/icons/green-dot.png'}
         />
         <Marker
           key={`${task.id}-end`}
           position={end}
+          icon={'http://maps.google.com/mapfiles/ms/icons/red-dot.png'}
         />
       </>
     );

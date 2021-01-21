@@ -6,7 +6,7 @@ export default function useTask(initial) {
 
   // Updates form for creating and editing a task
   const handleTaskChange = (e) => {
-    console.log(task, e.target)
+    // console.log(task, e.target)
     switch (e.target.name) {
       case 'start-lat':
         setTask(prev => {

@@ -22,24 +22,24 @@ describe('generateNodes helper', () =>{
       start: [
         {
           tasks: [1],
-          location: { lat: 45.502, lng: -73.567 },
+          coords: { lat: 45.502, lng: -73.567 },
           visited: false
         },
         {
           tasks: [2],
-          location: { lat: 45.422, lng: -75.697 },
+          coords: { lat: 45.422, lng: -75.697 },
           visited: false
         }
       ],
       end: [
         {
           tasks: [1],
-          location: { lat: 43.653, lng: -79.383 },
+          coords: { lat: 43.653, lng: -79.383 },
           visited: false
         },
         {
           tasks: [2],
-          location: { lat: 43.732, lng: -79.762 },
+          coords: { lat: 43.732, lng: -79.762 },
           visited: false
         }
       ]
@@ -69,24 +69,25 @@ describe('generateNodes helper', () =>{
       start: [
         {
           tasks: [1],
-          location: { lat: 45.502, lng: -73.567 },
+          coords: { lat: 45.502, lng: -73.567 },
           visited: false
         },
         {
           tasks: [2],
-          location: { lat: 45.422, lng: -75.697 },
+          coords: { lat: 45.422, lng: -75.697 },
           visited: false
         }
       ],
       end: [
         {
           tasks: [1, 2],
-          location: { lat: 43.653, lng: -79.383 },
+          coords: { lat: 43.653, lng: -79.383 },
           visited: false
         }
       ]
     };
     const result = generateNodes(tasks);
+    expect(result.end[0].tasks.length).toEqual(2);
     expect(result).toEqual(nodes);
   })
 });

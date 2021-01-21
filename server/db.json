@@ -14,18 +14,18 @@
       "color": "008000",
       "startLat": 45.422,
       "startLng": -75.697,
-      "endLat": 43.653,
-      "endLng": -79.383,
-      "freight": "Ottawa->Toronto, Groceries"
+      "endLat": 43.732,
+      "endLng": -79.762,
+      "freight": "Ottawa->Brampton, Groceries"
     },
     {
       "id": 3,
       "color": "0000FF",
       "startLat": 43.813,
       "startLng": -79.495,
-      "endLat": 45.502,
-      "endLng": -73.567,
-      "freight": "Concord->Montreal, Produce"
+      "endLat": 44.230,
+      "endLng": -76.481,
+      "freight": "Concord->Kingston, Produce"
     }
   ]
 }

@@ -10,22 +10,26 @@ export default function useTask(initial) {
     switch (e.target.name) {
       case 'start-lat':
         setTask(prev => {
-          return { ...prev, startLat: Number(e.target.value) }  
+          const start = { ...prev['start'], lat: Number(e.target.value)};
+          return { ...prev, start };
         });
         break;
       case 'start-lng':
         setTask(prev => {
-          return { ...prev, startLng: Number(e.target.value) }  
+          const start = { ...prev['start'], lng: Number(e.target.value)};
+          return { ...prev, start };
         });
         break;
       case 'end-lat':
         setTask(prev => {
-          return { ...prev, endLat: Number(e.target.value) }  
+          const end = { ...prev['end'], lat: Number(e.target.value)};
+          return { ...prev, end };
         });
         break;
       case 'end-lng':
         setTask(prev => {
-          return { ...prev, endLng: Number(e.target.value) }  
+          const end = { ...prev['end'], lng: Number(e.target.value)};
+          return { ...prev, end };
         });
         break;
       case 'freight':

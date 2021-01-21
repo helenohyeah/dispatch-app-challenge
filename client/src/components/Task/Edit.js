@@ -12,14 +12,14 @@ export default function Edit(props) {
         <input 
           type='text'
           name='start-lat'
-          value={task.startLat || ''}
+          value={task.start.lat || ''}
           onChange={e => handleTaskChange(e)}
         ></input>
         <label>Start Longitude:</label>
         <input 
           type='text'
           name='start-lng'
-          value={task.startLng || ''}
+          value={task.start.lng || ''}
           onChange={e => handleTaskChange(e)}
         ></input>
         <br />
@@ -27,14 +27,14 @@ export default function Edit(props) {
         <input 
           type='text'
           name='end-lat'
-          value={task.endLat || ''}
+          value={task.end.lat || ''}
           onChange={e => handleTaskChange(e)}
         ></input>
         <label>End Longitude:</label>
         <input 
           type='text'
           name='end-lng'
-          value={task.endLng || ''}
+          value={task.end.lng || ''}
           onChange={e => handleTaskChange(e)}
         ></input>
         <br />

@@ -1,49 +1,157 @@
 // Algorithim
-// Loop through each start node
-// Keep track of total distance
-// On each start node pick the closest next node from available nodes
-  // Available nodes = all unvisited start nodes and end node of tasks 'assigned'
-  // Set that start node to visited
-  // Add distance to total distance
-  // Repeat until all nodes are visited
-// Pick the route with the shortest overall distance
+// Begin with a hash map of nodes and distances
+// Get all start nodes
+// Run shortest path algorithm for all start nodes
+  // For each start node
+    // Current node = start node
+    // Visit current node and update hash map of nodes
+    // Find all possible nodes to visit and their distances from current node
+    // While there are possible nodes to visit
+      // Find the shortest distance node
+      // Visit shortest distance node and update hash map of nodes
+      // Current node = shortest distance node
+      // Find all possible nodes to visit and their distances from current node until there are no more possible nodes to visit
+    // Return shortest path
+// Return shortest route = shortest shortest path
 
-// Return a list of start and end nodes given tasks
+// Hash map of each node and its coordinates, if its a start node, and tasks
+const mockNodes = {
+  'A': {
+    coords: { lat: 1, lng: 1 },
+    isStart: true,
+    tasksToStart: [{ taskId: 1, isComplete: false }],
+    tasksToEnd: [{ taskId: 3, isComplete: false }],
+  },
+  'B': {
+    coords: { lat: 2, lng: 6 },
+    isStart: true,
+    tasksToStart: [{ taskId: 2, isComplete: false }],
+    tasksToEnd: [],
+  },
+  'C': {
+    coords: { lat: 5, lng: 1 },
+    isStart: true,
+    tasksToStart: [{ taskId: 3, isComplete: false }],
+    tasksToEnd: [],
+  },
+  'D': {
+    coords: { lat: 6, lng: 3 },
+    isStart: false,
+    tasksToStart: [],
+    tasksToEnd: [{ taskId: 1, isComplete: false }, { taskId: 2, isComplete: false }],
+  },
+};
+
+// Hash map of each node and it's distance to all other nodes
+const mockDistances = {
+  'start': { 'B': 5.1, 'C': 4, 'D': 6.3 },
+  'B': { 'start': 5.1, 'C': 5.8, 'D': 5.8 },
+  'C': { 'start': 5, 'B': 5.8, 'D': 2.8 },
+  'D': { 'start': 6.3, 'B': 5.8, 'C': 2.8 }
+};
+
+// Returns the node with the shortest distance value given a hash map of distances and a list of unvisited nodes
+const findShortestDistanceNode = (distances, nodes) => {
+  // Track shortest distance node
+  let shortest = null;
+
+  // Loop through each node in unvisited nodes
+  for (const node in nodes) {
+    // If no shortest value or if node distance is less than current shortest
+      // Set shortest to currentNode
+  }
+  return shortest;
+};
+
+// Returns a list of possible nodes to visit given a node, a list of active tasks, and a hash map of nodes
+const findNodesToVisit = (node, tasks, nodes) => {
+  // Track list of possible nodes to visit
+
+  // Loop through nodes
+  // If node isStart AND tasksToStart is not empty
+    // Add node to possible nodes
+  // If tasksToEnd contains any active task
+    // Add node to possible nodes
+  
+  // Return list of possible nodes to visit
+};
+
+// Returns a visited node and updated tasks given a node and a list of active tasks
+const visitNode = (node, tasks) => {
+  // Track node
+  // Track activeTasks
+
+  // If node is a startNode
+    // Set all tasksToStart to complete
+    // Add tasks to activeTasks
+  // If node is an endNode
+    // Loop through tasksToEnd
+      // If task matches any activeTasks
+        // Set task to complete
+        // Remove task from activeTasks
+  
+  // Return node and active tasks
+};
+
+// Returns the path and total distance of the shortest path given a start node, a hash map of nodes, and a hash map of distances
+const findShortestPath = (startNode, nodes, distances) => {
+  // Track distance from startNode
+  // Track path from startNode
+  // Track currentNode
+  // Track activeTasks
+  
+  // Set startNode to currentNode
+  // Visit currentNode
+    // Update currentNode and activeTasks
+    // Update nodes hash map with visited currentNode
+  // For the currentNode get a list of possible nodes to visit
+  // While there are nodes to visit
+    // findShortestDistanceNode given distances and nodes to visit
+    // Set shortestDistanceNode to currentNode
+    // Visit shortestDistanceNode (now currentNode)
+      // Update distance and path
+      // Update shortestDistanceNode (now currentNode) and activeTasks
+      // Update nodes hash map with visited shortestDistanceNode (now currentNode)
+      // Get a new list of possible nodes to visit (loop ends if no possible nodes to visit)
+
+  // Return path and distance
+};
+
+// Returns the path of the shortest route given a list of nodes
+const findShortestRoute = (nodes) => {
+  // Track shortest distance
+  // Track shortest route
+
+  // Generate a distances hash map of each node and it's distance to all other nodes
+
+  // Loop through each startNode
+  // Get the distance of the shortest path for that startNode
+  // If no shortest distance or if route distance is less than current shortest distance
+    // Set shortest distance and route to current distance and route
+  
+  // Return shortest route
+};
+
+// Returns the distance between two nodes
+const calcNodeDistance = (a, b) => {
+
+};
+
+// Returns a hash map of each node and it's distance to all other nodes given a hash map of nodes
+const generateDistances = (nodes) => {
+};
+
+// Return a hash map of nodes given a list of tasks
 const generateNodes = (tasks) => {
-  const nodes = { start: [], end: [] };
+};
 
-  const addNode = (coords, type, id) => {
-    const foundIndex = nodes[type].findIndex(node => node.coords.lat === coords.lat && node.coords.lng === coords.lng);
-    // If node exists, add task id to node
-    if(foundIndex >= 0) {
-      nodes[type][foundIndex].tasks.push(id);
-    // Else add node to nodes list
-    } else {
-      const newNode = {
-        tasks: [id],
-        coords: coords,
-        visited: false
-      };
-      nodes[type].push(newNode);
-    }
-  };
-
-  tasks.forEach(task => {
-    addNode(task.start, 'start', task.id);
-    addNode(task.end, 'end', task.id);
-  });
-
-  return nodes;
-}
-
-// Return the distance between two nodes
-// function calcNodeDistance(a, b) {
-
-// }
-
-// Returns the distance of a route given a start node and all nodes
-// function calcRouteDistance() {
-
-// }
-
-export { generateNodes };
+export {
+  findShortestDistanceNode,
+  findNodesToVisit,
+  visitNode,
+  findShortestPath,
+  findShortestRoute,
+  calcNodeDistance,
+  generateDistances,
+  generateNodes
+};

@@ -15,7 +15,7 @@ const colors = [
 let colorIndex = -1;
 
 // Assign a color given task id number
-function getColor(num) {
+function getColor() {
   if (colorIndex < colors.length) colorIndex++;
   if (colorIndex === colors.length) colorIndex = 0;
   return colors[colorIndex];

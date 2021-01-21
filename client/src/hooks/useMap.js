@@ -4,8 +4,7 @@ export default function useMap() {
 
   // Returns a map marker component given a task
   function createMarker(task) {
-    const start = { lat: task.startLat, lng: task.startLng };
-    const end = { lat: task.endLat, lng: task.endLng };
+    const { start, end } = task;
 
     return (
       <>
@@ -26,8 +25,8 @@ export default function useMap() {
   // Returns a polyline connecting start and end location given a task
   function createPolyline(task) {
     const pathCoords = [
-      { lat: task.startLat, lng: task.startLng },
-      { lat: task.endLat, lng: task.endLng }
+      task.start,
+      task.end
     ];
     const lineOptions = {
       strokeColor: `#${task.color}`
@@ -41,7 +40,6 @@ export default function useMap() {
       />
     );
   }
-
 
   return {
     createMarker,

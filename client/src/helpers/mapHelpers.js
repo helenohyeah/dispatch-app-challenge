@@ -45,8 +45,8 @@ const getCoords = (tasks) => {
   
   const coords = [];
   tasks.forEach(task => {
-    const startCoord = [task.startLat, task.startLng];
-    const endCoord = [task.endLat, task.endLng];
+    const startCoord = [task.start.lat, task.start.lng];
+    const endCoord = [task.end.lat, task.end.lng];
     if(!coords.some(coord => isSameCoord(coord, startCoord)))  coords.push(startCoord);
     if(!coords.some(coord => isSameCoord(coord, endCoord)))  coords.push(endCoord);
   });

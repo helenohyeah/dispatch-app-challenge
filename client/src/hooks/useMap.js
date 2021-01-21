@@ -27,11 +27,15 @@ export default function useMap() {
       { lat: task.startLat, lng: task.startLng },
       { lat: task.endLat, lng: task.endLng }
     ];
+    const lineOptions = {
+      strokeColor: `#${task.color}`
+    };
 
     return (
       <Polyline
         key={task.id}
         path={pathCoords}
+        options={lineOptions}
       />
     );
   }

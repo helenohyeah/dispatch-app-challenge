@@ -2,6 +2,7 @@ import Add from './Add';
 import AddTask from './AddTask';
 
 import useVisualMode from '../../hooks/useVisualMode';
+import { getColor } from '../../helpers/colorHelpers';
 
 // Visual modes
 const START = 'START';
@@ -18,6 +19,8 @@ export default function Create(props) {
       alert('Duplicate task');
     } else {
       transition(ADDING);
+      // Add a hex color to task to differentiate tasks
+      task.color = getColor();
       props.onAdd(task)
         .then(() => transition(START));
     }

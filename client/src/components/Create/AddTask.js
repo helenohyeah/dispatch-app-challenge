@@ -3,7 +3,6 @@ import useTask from '../../hooks/useTask';
 export default function AddTask(props) {
 
   const { task, handleTaskChange } = useTask({});
-  console.log(task);
 
   return (
     <>

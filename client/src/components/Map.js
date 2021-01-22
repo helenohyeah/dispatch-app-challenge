@@ -1,6 +1,8 @@
 import { withScriptjs, withGoogleMap, GoogleMap } from 'react-google-maps';
 import useMap from '../hooks/useMap';
 import { getCoords, getLatLngCenter } from '../helpers/mapHelpers';
+import axios from 'axios';
+
 
 export default function Map(props) {
 
@@ -27,6 +29,12 @@ export default function Map(props) {
     );
   }));
   // console.log(MapComponent);
+
+
+  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=43.813,-79.495&destinations=43.732,-79.762&key=${process.env.REACT_APP_GOOGLE_API_KEY}`;
+
+  axios.get(url)
+    .then(res => console.log(res));
 
   return (
     <>

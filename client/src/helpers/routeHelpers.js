@@ -1,3 +1,5 @@
+import { getDistance } from 'geolib';
+
 // Algorithim
 // Begin with a hash map of nodes and distances
 // Get all start nodes
@@ -128,10 +130,15 @@ const findShortestRoute = (nodes) => {
   // Return shortest route
 };
 
-// Returns the distance between two nodes
+// Returns the distance between two lat lng coordinates
 const calcNodeDistance = (a, b) => {
+  const start = { latitude: a.lat, longitude: a.lng };
+  const end = { latitude: b.lat, longitude: b.lng };
+  const accuracy = 1; // in meters
 
+  return getDistance(start, end, accuracy);
 };
+
 
 // Returns a hash map of each node and it's distance to all other nodes given a hash map of nodes
 const generateDistances = (nodes) => {

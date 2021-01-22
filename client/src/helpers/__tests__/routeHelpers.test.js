@@ -189,3 +189,11 @@ describe('findNodesToVisit', () => {
     });
   });
 });
+
+describe.only('calcNodeDistance', () => {
+  const start = { "lat": 45.422, "lng": -75.697 };
+  const end = { "lat": 45.502, "lng": -73.567 };
+  const result = calcNodeDistance(start, end);
+  console.log(result);
+  expect(result).toEqual(true);
+})

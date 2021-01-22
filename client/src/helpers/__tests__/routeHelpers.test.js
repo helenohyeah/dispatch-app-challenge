@@ -198,20 +198,24 @@ describe('generateDistances', () => {
 
   test('it should generate a hash map of nodes and its distance to all other nodes', () => {
     const result = {
-      'A': {
-        'B': 166538,
-        'C': 505499
-      },
-      'B': {
-        'A': 166538,
-        'C': 350159
-      },
-      'C': {
-        'A': 505499,
-        'B': 350159
-      }
+      'A': { 'B': 166538, 'C': 505499 },
+      'B': { 'A': 166538, 'C': 350159 },
+      'C': { 'A': 505499, 'B': 350159 }
     };
     const distances = generateDistances(nodes);
     expect(distances).toEqual(result);
+  });
+});
+
+describe('findShortestDistanceNode', () => {
+  test('it should return the shortest distance node', () => {
+    const start = { lat: 45.502, lng: -73.567 };
+    const nodes = {
+      'B': { coords: { lat: 45.422, lng: -75.697 }},
+      'C': { coords: { lat: 43.813, lng: -79.495 }}
+    };
+    const { shortest, distance } = findShortestDistanceNode(start, nodes);
+    expect(shortest).toEqual('B');
+    expect(distance).toEqual(166538);
   });
 });

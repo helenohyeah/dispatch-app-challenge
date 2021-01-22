@@ -16,17 +16,27 @@ import { getDistance } from 'geolib';
     // Return shortest path
 // Return shortest route = shortest shortest path
 
-// Returns the node with the shortest distance value given a hash map of distances and a list of unvisited nodes
-const findShortestDistanceNode = (distances, nodes) => {
+// Returns the node with the shortest distance value given start coordinates and a list of unvisited nodes
+const findShortestDistanceNode = (start, nodes) => {
   // Track shortest distance node
   let shortest = null;
+  // Track distance from start
+  let distance = 0;
 
   // Loop through each node in unvisited nodes
   for (const node in nodes) {
+    // Get distance of node from start
+    const currentDistance = calcNodeDistance(start, nodes[node].coords);
     // If no shortest value or if node distance is less than current shortest
+    if (!shortest || currentDistance < distance) {
       // Set shortest to currentNode
+      shortest = node;
+      // Set distance to currentDistance
+      distance = currentDistance;
+    }
   }
-  return shortest;
+  // Return shortest distance node and distance from start
+  return { shortest, distance };
 };
 
 // Returns a list of possible nodes to visit given a list of active tasks, and a hash map of nodes
@@ -92,7 +102,7 @@ const visitNode = (node, tasks) => {
 };
 
 // Returns the path and total distance of the shortest path given a start node, a hash map of nodes, and a hash map of distances
-const findShortestPath = (startNode, nodes, distances) => {
+const findShortestPath = (startNode, nodes) => {
   // Track distance from startNode
   // Track path from startNode
   // Track currentNode
@@ -104,10 +114,10 @@ const findShortestPath = (startNode, nodes, distances) => {
     // Update nodes hash map with visited currentNode
   // For the currentNode get a list of possible nodes to visit
   // While there are nodes to visit
-    // findShortestDistanceNode given distances and nodes to visit
+    // findShortestDistanceNode given currentNode coords and nodes to visit
     // Set shortestDistanceNode to currentNode
     // Visit shortestDistanceNode (now currentNode)
-      // Update distance and path
+      // Update distance traveled and path
       // Update shortestDistanceNode (now currentNode) and activeTasks
       // Update nodes hash map with visited shortestDistanceNode (now currentNode)
       // Get a new list of possible nodes to visit (loop ends if no possible nodes to visit)
@@ -168,6 +178,7 @@ const generateDistances = (nodes) => {
 
 // Return a hash map of nodes given a list of tasks
 const generateNodes = (tasks) => {
+
 };
 
 export {

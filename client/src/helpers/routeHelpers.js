@@ -18,12 +18,10 @@ import { getDistance } from 'geolib';
 
 // Returns the node with the shortest distance value given start coordinates and a list of unvisited nodes
 const findShortestDistanceNode = (start, nodes) => {
-  // Track shortest distance node
-  let shortestDistanceNode = null;
+  let shortestDistanceNode;
   // Track distance from start
   let distance = 0;
 
-  // Loop through each node in unvisited nodes
   for (const node in nodes) {
     // Get distance of node from start
     const currentDistance = calcNodeDistance(start, nodes[node].coords);
@@ -66,15 +64,19 @@ const findNodesToVisit = (tasks, nodes) => {
   return possibleNodes;
 };
 
-// Returns a visited node and updated tasks given a node and a list of active tasks
+// DENYS: do all your function docs like this:
+/**
+ * Returns a visited node and updated tasks given a node and a list of active tasks
+ */ 
 const visitNode = (node, tasks) => {
   // Track node
   let visitedNode = node;
   // Track active tasks
   let activeTasks = tasks;
+  console.log(visitedNode);
   
   // If node is a start node
-  if (visitedNode.tasksToStart.length) {
+  if (visitedNode.tasksToStart.length > 0) {
     visitedNode.tasksToStart.forEach(task => {
       // If task is not complete
       if (!task.isComplete) {
@@ -87,7 +89,7 @@ const visitNode = (node, tasks) => {
   }
   
   // If node is an end node
-  if (visitedNode.tasksToEnd.length) {
+  if (visitedNode.tasksToEnd.length > 0) {
     // Loop through tasksToEnd
     visitedNode.tasksToEnd.forEach(task => {
       // If task matches any activeTasks
@@ -112,8 +114,6 @@ const findShortestPath = (startNode, nodes) => {
   const path = [startNode];
   // Track tasks
   let tasks = [];
-  // Track nodes hash map
-  let nodesMap = nodes;
 
   // Set startNode to currentNode
   let currentNodeKey = Object.keys(startNode)[0];
@@ -125,47 +125,60 @@ const findShortestPath = (startNode, nodes) => {
   tasks = activeTasks;
   // console.log(tasks);
   // Update nodes hash map with visited currentNode
-  nodesMap[currentNodeKey] = visitedNode;
+  nodes[currentNodeKey] = visitedNode;
   // For the currentNode get a list of possible nodes to visit
-  let possibleNodes = findNodesToVisit(tasks, nodesMap);
+  let possibleNodes = findNodesToVisit(tasks, nodes);
   
   // While there are nodes to visit
-  while (Object.keys(possibleNodes)[0]) {
+  while (Object.keys(possibleNodes).length > 0) {
+    console.log(possibleNodes);
     // findShortestDistanceNode given currentNode coords and nodes to visit
     let { shortestDistanceNode, distance } = findShortestDistanceNode(currentNode.coords, possibleNodes);
     // Update distance traveled and path
     pathDistance += distance;
-    path.push({ [shortestDistanceNode]: nodesMap[shortestDistanceNode] });
+    path.push({ [shortestDistanceNode]: nodes[shortestDistanceNode] });
     
     // Set shortestDistanceNode to currentNode
-    currentNode = nodesMap[shortestDistanceNode];
+    currentNode = nodes[shortestDistanceNode];
     // Visit shortestDistanceNode (now currentNode)
     let { visitedNode, activeTasks } = visitNode(currentNode, tasks);
     // Update activeTasks
     tasks = activeTasks
     // Update nodes hash map with visited shortestDistanceNode (now currentNode)
-    nodesMap[shortestDistanceNode] = visitedNode;
+    nodes[shortestDistanceNode] = visitedNode;
     // Get a new list of possible nodes to visit (loop ends if no possible nodes to visit)
-    possibleNodes = findNodesToVisit(tasks, nodesMap);
+    possibleNodes = findNodesToVisit(tasks, nodes);
   }
 
   // Return path and distance
-  return { pathDistance, path };
+  // console.log(path);
+  return { path, pathDistance };
 };
 
 // Returns the path of the shortest route given a list of nodes
 const findShortestRoute = (nodes) => {
   // Track shortest distance
+  let distance = 0;
   // Track shortest route
+  let shortest;
 
-  // Generate a distances hash map of each node and it's distance to all other nodes
-
-  // Loop through each startNode
-  // Get the distance of the shortest path for that startNode
-  // If no shortest distance or if route distance is less than current shortest distance
-    // Set shortest distance and route to current distance and route
+  // Get start nodes
+  const startNodeKeys = Object.keys(nodes).filter(node => nodes[node].tasksToStart.length);
   
+  // Loop through each startNode
+  for (const startNode of startNodeKeys) {
+    // Get the distance of the shortest path for that startNode
+    const { path, pathDistance } = findShortestPath({ [startNode]: nodes[startNode] }, nodes);
+    // If no shortest distance or if route distance is less than current shortest distance
+    if (!shortest || distance < pathDistance) {
+      // Set shortest distance and route to current distance and route
+      shortest = path;
+      distance = pathDistance;
+    }
+  }
+
   // Return shortest route
+  return shortest;
 };
 
 // Returns the distance between two lat lng coordinates
@@ -175,33 +188,6 @@ const calcNodeDistance = (a, b) => {
   const accuracy = 1; // in meters
 
   return getDistance(start, end, accuracy);
-};
-
-
-// Returns a hash map of each node and it's distance to all other nodes given a hash map of nodes
-const generateDistances = (nodes) => {
-  // Track distances
-  const distances = {};
-
-  const nodeKeys = Object.keys(nodes);
-  
-  for (let i = 0; i < nodeKeys.length - 1; i++) {
-    const firstNode = nodes[nodeKeys[i]];
-    if(!distances[nodeKeys[i]]) distances[nodeKeys[i]] = {};
-
-    for (let j = 1; j < nodeKeys.length; j++) {
-      if (i === j) continue;
-      if (!distances[nodeKeys[j]]) distances[nodeKeys[j]] = {};
-
-      const secondNode = nodes[nodeKeys[j]];
-      const distance = calcNodeDistance(firstNode.coords, secondNode.coords);
-      
-      distances[nodeKeys[i]][nodeKeys[j]] = distance;
-      distances[nodeKeys[j]][nodeKeys[i]] = distance;
-    }
-  }
-  // Return distances
-  return distances;
 };
 
 // Return a hash map of nodes given a list of tasks
@@ -216,6 +202,5 @@ export {
   findShortestPath,
   findShortestRoute,
   calcNodeDistance,
-  generateDistances,
   generateNodes
 };

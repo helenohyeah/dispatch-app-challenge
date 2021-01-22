@@ -159,6 +159,7 @@ const findShortestRoute = (nodes) => {
   let distance = 0;
   // Track shortest route
   let shortest;
+  if (nodes === null) return shortest = [];
 
   // Get start nodes
   const startNodeKeys = Object.keys(nodes).filter(node => nodes[node].tasksToStart.length);

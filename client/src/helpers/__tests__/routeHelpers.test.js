@@ -314,6 +314,7 @@ describe("findShortestRoute", () => {
       "Ottawa",
       "Montreal",
     ]);
+
   });
 
   test("it should return the correct shortest route given four nodes and three tasks", () => {
@@ -348,6 +349,11 @@ describe("findShortestRoute", () => {
       "Toronto",
       "Mississauga",
     ]);
+  });
+
+  test("it should return an empty array given null nodes", () => {
+    const nodes = null;
+    expect(findShortestRoute(nodes)).toEqual([]);;
   });
 });
 

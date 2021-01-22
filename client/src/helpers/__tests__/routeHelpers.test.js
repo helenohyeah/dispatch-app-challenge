@@ -79,7 +79,7 @@ describe('visitNode', () => {
       expect(activeTasks).toEqual([]);
     });
     
-    test('it should not remove tasks that aren\'t in tasksToEnd from active tasks', () => {
+    test('it should not remove tasks that are not in tasksToEnd from active tasks', () => {
       const tasks = [1, 3];
       const { activeTasks } = visitNode(node, tasks);
       expect(activeTasks).toEqual([3]);
@@ -104,10 +104,88 @@ describe('visitNode', () => {
       expect(activeTasks).toEqual(expect.not.arrayContaining([1]));
     });
 
-    test('it should not remove tasks that aren\'t in tasksToEnd from active tasks', () => {
+    test('it should not remove tasks that are not in tasksToEnd from active tasks', () => {
       const tasks = [1, 4];
       const { activeTasks } = visitNode(node,tasks);
       expect(activeTasks).toEqual(expect.arrayContaining([4]));
+    });
+  });
+});
+
+describe('findNodesToVisit', () => {
+  describe('given an empty list of tasks', () => {
+    const nodes = {
+      'A': {
+        tasksToStart: [{ id: 1, isComplete: false }],
+        tasksToEnd: [{ id: 3, isComplete: false }],
+      },
+      'B': {
+        tasksToStart: [{ id: 2, isComplete: true }],
+        tasksToEnd: [],
+      },
+      'C': {
+        tasksToStart: [{ id: 3, isComplete: false }, { id: 4, isComplete: true }],
+        tasksToEnd: [],
+      },
+      'D': {
+        tasksToStart: [],
+        tasksToEnd: [{ id: 1, isComplete: false }, { id: 2, isComplete: false }],
+      }
+    };
+    const tasks = [];
+    const nodesToVisit = findNodesToVisit(tasks, nodes);
+
+    test('it should only include nodes with incomplete tasksToStart', () => {
+      expect(Object.keys(nodesToVisit)).toEqual(expect.arrayContaining(['A', 'C']));
+      expect(Object.keys(nodesToVisit)).toHaveLength(2);
+    });
+
+    test('it should not include nodes with only completed tasksToStart', () => {
+      expect(Object.keys(nodesToVisit)).toEqual(expect.not.arrayContaining(['B']));
+    });
+
+    test('it should not include nodes with only tasksToEnd', () => {
+      expect(Object.keys(nodesToVisit)).toEqual(expect.not.arrayContaining(['D']));
+    });
+  });
+
+  describe('given a list of tasks', () => {
+    const nodes = {
+      'A': {
+        tasksToStart: [{ id: 1, isComplete: false }],
+        tasksToEnd: [{ id: 3, isComplete: true }],
+      },
+      'B': {
+        tasksToStart: [{ id: 2, isComplete: true }, { id: 5, isComplete: true }],
+        tasksToEnd: [{ id: 4, isComplete: false }],
+      },
+      'C': {
+        tasksToStart: [{ id: 3, isComplete: true }, { id: 4, isComplete: true }],
+        tasksToEnd: [],
+      },
+      'D': {
+        tasksToStart: [],
+        tasksToEnd: [{ id: 1, isComplete: false }, { id: 2, isComplete: false }],
+      },
+      'E': {
+        tasksToStart: [],
+        tasksToEnd: [{ id: 5, isComplete: false }]
+      }
+    };
+    const tasks = [2, 4];
+    const nodesToVisit = findNodesToVisit(tasks, nodes);
+
+    test('it should include all nodes with incomplete tasksToStart', () => {
+      expect(Object.keys(nodesToVisit)).toEqual(expect.arrayContaining(['A']));
+    });
+
+    test('it should include any nodes with tasksToEnd that can be completed', () => {
+      expect(Object.keys(nodesToVisit)).toEqual(expect.arrayContaining(['B', 'D']));
+    });
+
+    test('it should not include nodes with only tasksToEnd that cannot be completed or only completed tasksToStart', () => {
+      expect(Object.keys(nodesToVisit)).toEqual(expect.not.arrayContaining(['E']));
+      expect(Object.keys(nodesToVisit)).toEqual(expect.not.arrayContaining(['C']));
     });
   });
 });

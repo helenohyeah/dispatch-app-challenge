@@ -14,42 +14,6 @@
     // Return shortest path
 // Return shortest route = shortest shortest path
 
-// Hash map of each node and its coordinates, if its a start node, and tasks
-const mockNodes = {
-  'A': {
-    coords: { lat: 1, lng: 1 },
-    isStart: true,
-    tasksToStart: [{ taskId: 1, isComplete: false }],
-    tasksToEnd: [{ taskId: 3, isComplete: false }],
-  },
-  'B': {
-    coords: { lat: 2, lng: 6 },
-    isStart: true,
-    tasksToStart: [{ taskId: 2, isComplete: false }],
-    tasksToEnd: [],
-  },
-  'C': {
-    coords: { lat: 5, lng: 1 },
-    isStart: true,
-    tasksToStart: [{ taskId: 3, isComplete: false }],
-    tasksToEnd: [],
-  },
-  'D': {
-    coords: { lat: 6, lng: 3 },
-    isStart: false,
-    tasksToStart: [],
-    tasksToEnd: [{ taskId: 1, isComplete: false }, { taskId: 2, isComplete: false }],
-  },
-};
-
-// Hash map of each node and it's distance to all other nodes
-const mockDistances = {
-  'start': { 'B': 5.1, 'C': 4, 'D': 6.3 },
-  'B': { 'start': 5.1, 'C': 5.8, 'D': 5.8 },
-  'C': { 'start': 5, 'B': 5.8, 'D': 2.8 },
-  'D': { 'start': 6.3, 'B': 5.8, 'C': 2.8 }
-};
-
 // Returns the node with the shortest distance value given a hash map of distances and a list of unvisited nodes
 const findShortestDistanceNode = (distances, nodes) => {
   // Track shortest distance node
@@ -79,7 +43,9 @@ const findNodesToVisit = (node, tasks, nodes) => {
 // Returns a visited node and updated tasks given a node and a list of active tasks
 const visitNode = (node, tasks) => {
   // Track node
-  // Track activeTasks
+  const visitedNode = node;
+  // Track active tasks
+  const activeTasks = tasks;
 
   // If node is a startNode
     // Set all tasksToStart to complete
@@ -91,6 +57,7 @@ const visitNode = (node, tasks) => {
         // Remove task from activeTasks
   
   // Return node and active tasks
+  return { visitedNode, activeTasks };
 };
 
 // Returns the path and total distance of the shortest path given a start node, a hash map of nodes, and a hash map of distances

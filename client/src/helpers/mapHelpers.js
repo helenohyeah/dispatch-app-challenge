@@ -1,8 +1,9 @@
 // Returns center coordinates given an array of latitude and longitude coordinates in degrees
 // e.g. [[latitude, longitude], [latitude, longitude]]
+// DENYS:  loosely based on code from: https://<some link here>
 const getLatLngCenter = (coords) => {
-  const radToDeg = (rad) => rad * 180/Math.PI;
-  const degToRad = (deg) => deg * Math.PI/180;
+  const radToDeg = (rad) => (rad * 180) / Math.PI;
+  const degToRad = (deg) => (deg * Math.PI) / 180;
   const latIndex = 0;
   const lngIndex = 1;
 
@@ -10,8 +11,8 @@ const getLatLngCenter = (coords) => {
   let sumX = 0;
   let sumY = 0;
   let sumZ = 0;
-  
-  for(const coord of coords) {
+
+  for (const coord of coords) {
     const lat = degToRad(coord[latIndex]);
     const lng = degToRad(coord[lngIndex]);
     // Sum each vector
@@ -34,24 +35,25 @@ const getLatLngCenter = (coords) => {
   const centerLng = radToDeg(lng);
 
   return { lat: centerLat, lng: centerLng };
-}
+};
 
 // Returns an array of coordinates given tasks
 const getCoords = (tasks) => {
-  
-  if(!tasks[0]) return null;
+  if (!tasks[0]) return null;
 
   const isSameCoord = (a, b) => a[0] === b[0] && a[1] === b[1];
-  
+
   const coords = [];
-  tasks.forEach(task => {
+  tasks.forEach((task) => {
     const startCoord = [task.start.lat, task.start.lng];
     const endCoord = [task.end.lat, task.end.lng];
-    if(!coords.some(coord => isSameCoord(coord, startCoord)))  coords.push(startCoord);
-    if(!coords.some(coord => isSameCoord(coord, endCoord)))  coords.push(endCoord);
+    if (!coords.some((coord) => isSameCoord(coord, startCoord)))
+      coords.push(startCoord);
+    if (!coords.some((coord) => isSameCoord(coord, endCoord)))
+      coords.push(endCoord);
   });
-  
+
   return coords;
-}
+};
 
 export { getLatLngCenter, getCoords };

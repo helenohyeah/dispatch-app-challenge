@@ -43,18 +43,33 @@ const findNodesToVisit = (node, tasks, nodes) => {
 // Returns a visited node and updated tasks given a node and a list of active tasks
 const visitNode = (node, tasks) => {
   // Track node
-  const visitedNode = node;
+  let visitedNode = node;
   // Track active tasks
-  const activeTasks = tasks;
-
-  // If node is a startNode
+  let activeTasks = tasks;
+  
+  // If node is a start node
+  if(visitedNode.tasksToStart.length) {
     // Set all tasksToStart to complete
     // Add tasks to activeTasks
-  // If node is an endNode
+    visitedNode.tasksToStart.forEach(task => {
+      task.isComplete = true;
+      activeTasks.push(task.id);
+    });
+  }
+  
+  // If node is an end node
+  if(visitedNode.tasksToEnd.length) {
     // Loop through tasksToEnd
+    visitedNode.tasksToEnd.forEach(task => {
       // If task matches any activeTasks
+      if(activeTasks.includes(task.id)) {
         // Set task to complete
+        task.isComplete = true;
         // Remove task from activeTasks
+        activeTasks = activeTasks.filter(taskId => taskId !== task.id);        
+      }
+    });
+  }
   
   // Return node and active tasks
   return { visitedNode, activeTasks };

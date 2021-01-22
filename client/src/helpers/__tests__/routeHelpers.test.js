@@ -13,25 +13,22 @@ import {
 const mockNodes = {
   'A': {
     coords: { lat: 1, lng: 1 },
-    isStart: true,
+    isStart: true, // don't need. use length of tasksToStart/End
     tasksToStart: [{ id: 1, isComplete: false }],
     tasksToEnd: [{ id: 3, isComplete: false }],
   },
   'B': {
     coords: { lat: 2, lng: 6 },
-    isStart: true,
     tasksToStart: [{ id: 2, isComplete: false }],
     tasksToEnd: [],
   },
   'C': {
     coords: { lat: 5, lng: 1 },
-    isStart: true,
     tasksToStart: [{ id: 3, isComplete: false }],
     tasksToEnd: [],
   },
   'D': {
     coords: { lat: 6, lng: 3 },
-    isStart: false,
     tasksToStart: [],
     tasksToEnd: [{ id: 1, isComplete: false }, { id: 2, isComplete: false }],
   },
@@ -48,7 +45,6 @@ const mockDistances = {
 describe('visitNode', () => {
   describe('given a start node', () => {
     const node = { 
-      isStart: true,
       tasksToStart: [{ id: 1, isComplete: false }, { id: 2, isComplete: false}],
       tasksToEnd: []
     };
@@ -56,7 +52,6 @@ describe('visitNode', () => {
     test('it should mark all tasks as complete and add task ids to active tasks', () => {
       const tasks = [];
       const { visitedNode, activeTasks } = visitNode(node, tasks);
-      console.log(visitedNode, activeTasks);
       expect(visitedNode.tasksToStart[0].isComplete).toEqual(true);
       expect(visitedNode.tasksToStart[1].isComplete).toEqual(true);
       expect(activeTasks).toEqual([1, 2]);
@@ -72,7 +67,6 @@ describe('visitNode', () => {
 
   describe('given an end node', () => {
     const node = {
-      isStart: false,
       tasksToStart: [],
       tasksToEnd: [{ id: 1, isComplete: false }, { id: 2, isComplete: false}]
     };
@@ -94,7 +88,6 @@ describe('visitNode', () => {
 
   describe('given a start and end node', () => {
     const node = {
-      isStart: true,
       tasksToStart: [{ id: 3, isComplete: false }],
       tasksToEnd: [{ id: 1, isComplete: false }, { id: 2, isComplete: false}],
     };
@@ -106,15 +99,15 @@ describe('visitNode', () => {
       expect(visitedNode.tasksToStart[0].isComplete).toEqual(true);
       expect(activeTasks).toEqual(expect.arrayContaining([3]));
       // Mark matching tasksToEnd as complete, remove them from activeTasks
-      expect(visitedNode.tasksToComplete[0].isComplete).toEqual(true);
-      expect(visitedNode.tasksToComplete[0].isComplete).toEqual(false);
-      expect(activeTasks).toEqual([]);
+      expect(visitedNode.tasksToEnd[0].isComplete).toEqual(true);
+      expect(visitedNode.tasksToEnd[1].isComplete).toEqual(false);
+      expect(activeTasks).toEqual(expect.not.arrayContaining([1]));
     });
 
     test('it should not remove tasks that aren\'t in tasksToEnd from active tasks', () => {
       const tasks = [1, 4];
-      const { activeTasks } = visitedNode(node,tasks);
-      expect(activeTasks).toEqual([4])
+      const { activeTasks } = visitNode(node,tasks);
+      expect(activeTasks).toEqual(expect.arrayContaining([4]));
     });
   });
 });

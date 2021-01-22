@@ -73,7 +73,6 @@ const visitNode = (node, tasks) => {
   let visitedNode = node;
   // Track active tasks
   let activeTasks = tasks;
-  console.log(visitedNode);
   
   // If node is a start node
   if (visitedNode.tasksToStart.length > 0) {
@@ -131,7 +130,6 @@ const findShortestPath = (startNode, nodes) => {
   
   // While there are nodes to visit
   while (Object.keys(possibleNodes).length > 0) {
-    console.log(possibleNodes);
     // findShortestDistanceNode given currentNode coords and nodes to visit
     let { shortestDistanceNode, distance } = findShortestDistanceNode(currentNode.coords, possibleNodes);
     // Update distance traveled and path
@@ -192,7 +190,40 @@ const calcNodeDistance = (a, b) => {
 
 // Return a hash map of nodes given a list of tasks
 const generateNodes = (tasks) => {
+  let nodes = {};
+  if (tasks.length === 0) return nodes = null;
 
+  tasks.forEach(task => {
+    // Add taskToStart to node
+    const startNodeName = `${task.start.lat},${task.start.lng}`;
+    if (!nodes[startNodeName]) {
+      // Create node
+      nodes[startNodeName] = {
+        coords: { lat: task.start.lat, lng: task.start.lng },
+        tasksToStart: [{ id: task.id, isComplete: false}],
+        tasksToEnd: []
+      };
+    } else {
+      // Add to tasksToStart
+      nodes[startNodeName].tasksToStart.push({ id: task.id, isComplete: false });
+    }
+
+    // Add taskToEnd to node
+    const endNodeName = `${task.end.lat},${task.end.lng}`;
+    if (!nodes[endNodeName]) {
+      // Create node
+      nodes[endNodeName] = {
+        coords: { lat: task.end.lat, lng: task.end.lng },
+        tasksToStart: [],
+        tasksToEnd: [{ id: task.id, isComplete: false}]
+      };
+    } else {
+      // Add to tasksToEnd
+      nodes[endNodeName].tasksToEnd.push({ id: task.id, isComplete: false });
+    }
+  });
+
+  return nodes;
 };
 
 export {

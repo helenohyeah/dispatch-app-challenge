@@ -350,3 +350,64 @@ describe("findShortestRoute", () => {
     ]);
   });
 });
+
+describe("generateNodes", () => {
+  describe("given a list of tasks,", () => {
+    const tasks = [
+      {
+        "id": 1,
+        "color": "FF0000",
+        "start": { "lat": 45.502, "lng": -73.567 },
+        "end": { "lat": 43.653, "lng": -79.383 },
+        "freight": "Montreal->Toronto, Produce"
+      },
+      {
+        "id": 2,
+        "color": "008000",
+        "start": { "lat": 45.422, "lng": -75.697 },
+        "end": { "lat": 43.653, "lng": -79.383 },
+        "freight": "Ottawa->Toronto, Groceries"
+      },
+      {
+        "id": 3,
+        "color": "0000FF",
+        "start": { "lat": 43.813, "lng": -79.495 },
+        "end": { "lat": 45.502, "lng": -73.567 },
+        "freight": "Concord->Montreal, Produce"
+      }
+    ];
+
+    test("it should return a hash map of nodes", () => {
+      const result = {
+        '45.502,-73.567': {
+          coords: { lat:  45.502, lng: -73.567 },
+          tasksToStart: [{ id: 1, isComplete: false }],
+          tasksToEnd: [{ id: 3, isComplete: false }]
+        },
+        '43.653,-79.383': {
+          coords: { lat:  43.653, lng: -79.383 },
+          tasksToStart: [],
+          tasksToEnd: [{ id: 1, isComplete: false }, { id: 2, isComplete: false }]
+        },
+        '45.422,-75.697': {
+          coords: { lat:  45.422, lng: -75.697 },
+          tasksToStart: [{ id: 2, isComplete: false }],
+          tasksToEnd: []
+        },
+        '43.813,-79.495': {
+          coords: { lat:  43.813, lng: -79.495 },
+          tasksToStart: [{ id: 3, isComplete: false }],
+          tasksToEnd: []
+        },
+      };
+      expect(generateNodes(tasks)).toEqual(result);
+    });
+  });
+
+  describe("given a list of empty tasks", () => {
+    const tasks = [];
+    test("it should return null", () => {
+      expect(generateNodes(tasks)).toBeNull();
+    });
+  });
+})

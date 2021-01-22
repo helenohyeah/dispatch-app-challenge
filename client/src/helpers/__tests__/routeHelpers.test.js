@@ -8,39 +8,6 @@ import {
   generateNodes
 } from '../routeHelpers';
 
-// Hash map of each node and its coordinates, if its a start node, and tasks
-const mockNodes = {
-  'A': {
-    coords: { lat: 1, lng: 1 },
-    isStart: true, // don't need. use length of tasksToStart/End
-    tasksToStart: [{ id: 1, isComplete: false }],
-    tasksToEnd: [{ id: 3, isComplete: false }],
-  },
-  'B': {
-    coords: { lat: 2, lng: 6 },
-    tasksToStart: [{ id: 2, isComplete: false }],
-    tasksToEnd: [],
-  },
-  'C': {
-    coords: { lat: 5, lng: 1 },
-    tasksToStart: [{ id: 3, isComplete: false }],
-    tasksToEnd: [],
-  },
-  'D': {
-    coords: { lat: 6, lng: 3 },
-    tasksToStart: [],
-    tasksToEnd: [{ id: 1, isComplete: false }, { id: 2, isComplete: false }],
-  },
-};
-
-// Hash map of each node and it's distance to all other nodes
-const mockDistances = {
-  'start': { 'B': 5.1, 'C': 4, 'D': 6.3 },
-  'B': { 'start': 5.1, 'C': 5.8, 'D': 5.8 },
-  'C': { 'start': 5, 'B': 5.8, 'D': 2.8 },
-  'D': { 'start': 6.3, 'B': 5.8, 'C': 2.8 }
-};
-
 describe('visitNode', () => {
   describe('given a start node', () => {
     const node = { 
@@ -60,7 +27,6 @@ describe('visitNode', () => {
       const tasks = [3];
       const { activeTasks } = visitNode(node, tasks);
       expect(activeTasks).toEqual(expect.arrayContaining([3]));
-      expect(activeTasks).toEqual(expect.arrayContaining([1, 2]));
     });
   });
 
@@ -96,7 +62,6 @@ describe('visitNode', () => {
       const { visitedNode, activeTasks } = visitNode(node, tasks);
       // Mark all tasksToStart as complete, return them as activeTasks
       expect(visitedNode.tasksToStart[0].isComplete).toEqual(true);
-      expect(activeTasks).toEqual(expect.arrayContaining([3]));
       // Mark matching tasksToEnd as complete, remove them from activeTasks
       expect(visitedNode.tasksToEnd[0].isComplete).toEqual(true);
       expect(visitedNode.tasksToEnd[1].isComplete).toEqual(false);
@@ -107,6 +72,16 @@ describe('visitNode', () => {
       const tasks = [1, 4];
       const { activeTasks } = visitNode(node,tasks);
       expect(activeTasks).toEqual(expect.arrayContaining([4]));
+    });
+
+    test('it should not pick up tasks that are already completed', () => {
+      const node = {
+        tasksToStart: [{ id: 3, isComplete: true }],
+        tasksToEnd: [{ id: 1, isComplete: false }, { id: 2, isComplete: false}],
+      };
+      const tasks = [];
+      const { activeTasks } = visitNode(node, tasks);
+      expect(activeTasks).toEqual(expect.not.arrayContaining([3]));
     });
   });
 });
@@ -187,6 +162,7 @@ describe('findNodesToVisit', () => {
       expect(Object.keys(nodesToVisit)).toEqual(expect.not.arrayContaining(['C']));
     });
   });
+
 });
 
 describe('generateDistances', () => {
@@ -214,8 +190,67 @@ describe('findShortestDistanceNode', () => {
       'B': { coords: { lat: 45.422, lng: -75.697 }},
       'C': { coords: { lat: 43.813, lng: -79.495 }}
     };
-    const { shortest, distance } = findShortestDistanceNode(start, nodes);
-    expect(shortest).toEqual('B');
+    const { shortestDistanceNode, distance } = findShortestDistanceNode(start, nodes);
+    expect(shortestDistanceNode).toEqual('B');
     expect(distance).toEqual(166538);
+  });
+});
+
+describe('findShortestPath', () => {
+  test('it should return correct path given two nodes', () => {
+    const nodes = {
+      'Toronto': {
+        coords: { lat: 43.653, lng: -79.383 },
+        tasksToStart: [{ id: 1, isComplete: false }],
+        tasksToEnd: [{ id: 2, isComplete: false }],
+      },
+      'Montreal': {
+        coords: { lat: 45.502, lng: -73.567 },
+        tasksToStart: [{ id: 2, isComplete: false }],
+        tasksToEnd: [{ id: 1, isComplete: false }],
+      }
+    };
+    const startNode = {
+      'Toronto': {
+        coords: { lat: 43.653, lng: -79.383 },
+        tasksToStart: [{ id: 1, isComplete: false }],
+        tasksToEnd: [{ id: 2, isComplete: false }],
+      }
+    };
+    const { pathDistance, path } = findShortestPath(startNode, nodes);
+    const pathNames = path.map(node => Object.keys(node)[0]);
+    expect(pathNames).toEqual(['Toronto', 'Montreal', 'Toronto']);
+    expect(pathDistance).toEqual(1009712);
+  });
+
+  test('it should return correct path given three nodes', () => {
+    const nodes = {
+      'Toronto': {
+        coords: { lat: 43.653, lng: -79.383 },
+        tasksToStart: [],
+        tasksToEnd: [{ id: 2, isComplete: false }],
+      },
+      'Montreal': {
+        coords: { lat: 45.502, lng: -73.567 },
+        tasksToStart: [{ id: 2, isComplete: false }, { id: 3, isComplete: false }],
+        tasksToEnd: [{ id: 1, isComplete: false }],
+      },
+      'Ottawa': {
+        coords: { lat: 45.422, lng: -75.697 },
+        tasksToStart: [{ id: 1, isComplete: false }],
+        tasksToEnd: [{ id: 3, isComplete: false }],
+      }
+    };
+    const startNode = {
+      'Ottawa': {
+        coords: { lat: 45.422, lng: -75.697 },
+        tasksToStart: [{ id: 1, isComplete: false }],
+        tasksToEnd: [{ id: 3, isComplete: false }],
+      }
+    };
+    const { pathDistance, path } = findShortestPath(startNode, nodes);
+    const pathNames = path.map(node => Object.keys(node)[0]);
+    expect(pathNames).toEqual(['Ottawa', 'Montreal', 'Ottawa', 'Toronto']);
+    expect(pathDistance).toEqual(685609);
   });
 });

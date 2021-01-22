@@ -19,7 +19,7 @@ import { getDistance } from 'geolib';
 // Returns the node with the shortest distance value given start coordinates and a list of unvisited nodes
 const findShortestDistanceNode = (start, nodes) => {
   // Track shortest distance node
-  let shortest = null;
+  let shortestDistanceNode = null;
   // Track distance from start
   let distance = 0;
 
@@ -28,15 +28,15 @@ const findShortestDistanceNode = (start, nodes) => {
     // Get distance of node from start
     const currentDistance = calcNodeDistance(start, nodes[node].coords);
     // If no shortest value or if node distance is less than current shortest
-    if (!shortest || currentDistance < distance) {
+    if (!shortestDistanceNode || currentDistance < distance) {
       // Set shortest to currentNode
-      shortest = node;
+      shortestDistanceNode = node;
       // Set distance to currentDistance
       distance = currentDistance;
     }
   }
   // Return shortest distance node and distance from start
-  return { shortest, distance };
+  return { shortestDistanceNode, distance };
 };
 
 // Returns a list of possible nodes to visit given a list of active tasks, and a hash map of nodes
@@ -74,21 +74,24 @@ const visitNode = (node, tasks) => {
   let activeTasks = tasks;
   
   // If node is a start node
-  if(visitedNode.tasksToStart.length) {
-    // Set all tasksToStart to complete
-    // Add tasks to activeTasks
+  if (visitedNode.tasksToStart.length) {
     visitedNode.tasksToStart.forEach(task => {
-      task.isComplete = true;
-      activeTasks.push(task.id);
+      // If task is not complete
+      if (!task.isComplete) {
+        // Set task to complete
+        task.isComplete = true;
+        // Add task to activeTasks
+        activeTasks.push(task.id);
+      }
     });
   }
   
   // If node is an end node
-  if(visitedNode.tasksToEnd.length) {
+  if (visitedNode.tasksToEnd.length) {
     // Loop through tasksToEnd
     visitedNode.tasksToEnd.forEach(task => {
       // If task matches any activeTasks
-      if(activeTasks.includes(task.id)) {
+      if (activeTasks.includes(task.id)) {
         // Set task to complete
         task.isComplete = true;
         // Remove task from activeTasks
@@ -104,25 +107,50 @@ const visitNode = (node, tasks) => {
 // Returns the path and total distance of the shortest path given a start node, a hash map of nodes, and a hash map of distances
 const findShortestPath = (startNode, nodes) => {
   // Track distance from startNode
-  // Track path from startNode
-  // Track currentNode
-  // Track activeTasks
-  
+  let pathDistance = 0;
+  // Track path from startNode and set it to startNode
+  const path = [startNode];
+  // Track tasks
+  let tasks = [];
+  // Track nodes hash map
+  let nodesMap = nodes;
+
   // Set startNode to currentNode
+  let currentNodeKey = Object.keys(startNode)[0];
+  let currentNode = startNode[currentNodeKey];
+  
   // Visit currentNode
-    // Update currentNode and activeTasks
-    // Update nodes hash map with visited currentNode
+  let { visitedNode, activeTasks } = visitNode(currentNode, tasks);
+  // Update activeTasks
+  tasks = activeTasks;
+  // console.log(tasks);
+  // Update nodes hash map with visited currentNode
+  nodesMap[currentNodeKey] = visitedNode;
   // For the currentNode get a list of possible nodes to visit
+  let possibleNodes = findNodesToVisit(tasks, nodesMap);
+  
   // While there are nodes to visit
+  while (Object.keys(possibleNodes)[0]) {
     // findShortestDistanceNode given currentNode coords and nodes to visit
+    let { shortestDistanceNode, distance } = findShortestDistanceNode(currentNode.coords, possibleNodes);
+    // Update distance traveled and path
+    pathDistance += distance;
+    path.push({ [shortestDistanceNode]: nodesMap[shortestDistanceNode] });
+    
     // Set shortestDistanceNode to currentNode
+    currentNode = nodesMap[shortestDistanceNode];
     // Visit shortestDistanceNode (now currentNode)
-      // Update distance traveled and path
-      // Update shortestDistanceNode (now currentNode) and activeTasks
-      // Update nodes hash map with visited shortestDistanceNode (now currentNode)
-      // Get a new list of possible nodes to visit (loop ends if no possible nodes to visit)
+    let { visitedNode, activeTasks } = visitNode(currentNode, tasks);
+    // Update activeTasks
+    tasks = activeTasks
+    // Update nodes hash map with visited shortestDistanceNode (now currentNode)
+    nodesMap[shortestDistanceNode] = visitedNode;
+    // Get a new list of possible nodes to visit (loop ends if no possible nodes to visit)
+    possibleNodes = findNodesToVisit(tasks, nodesMap);
+  }
 
   // Return path and distance
+  return { pathDistance, path };
 };
 
 // Returns the path of the shortest route given a list of nodes

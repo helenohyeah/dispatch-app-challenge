@@ -47,11 +47,16 @@ const mockDistances = {
 
 describe('visitNode', () => {
   describe('given a start node', () => {
-    const node = { isStart: true, tasksToStart: [{ id: 1, isComplete: false }, { id: 2, isComplete: false}] };
+    const node = { 
+      isStart: true,
+      tasksToStart: [{ id: 1, isComplete: false }, { id: 2, isComplete: false}],
+      tasksToEnd: []
+    };
 
     test('it should mark all tasks as complete and add task ids to active tasks', () => {
       const tasks = [];
       const { visitedNode, activeTasks } = visitNode(node, tasks);
+      console.log(visitedNode, activeTasks);
       expect(visitedNode.tasksToStart[0].isComplete).toEqual(true);
       expect(visitedNode.tasksToStart[1].isComplete).toEqual(true);
       expect(activeTasks).toEqual([1, 2]);
@@ -66,7 +71,11 @@ describe('visitNode', () => {
   });
 
   describe('given an end node', () => {
-    const node = { isStart: false, tasksToEnd: [{ id: 1, isComplete: false }, { id: 2, isComplete: false}] };
+    const node = {
+      isStart: false,
+      tasksToStart: [],
+      tasksToEnd: [{ id: 1, isComplete: false }, { id: 2, isComplete: false}]
+    };
 
     test('it should only mark tasks that match given tasks as complete and remove complete tasks from active tasks', () => {
       const tasks = [1];

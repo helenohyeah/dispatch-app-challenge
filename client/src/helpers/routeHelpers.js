@@ -27,17 +27,31 @@ const findShortestDistanceNode = (distances, nodes) => {
   return shortest;
 };
 
-// Returns a list of possible nodes to visit given a node, a list of active tasks, and a hash map of nodes
-const findNodesToVisit = (node, tasks, nodes) => {
+// Returns a list of possible nodes to visit given a list of active tasks, and a hash map of nodes
+const findNodesToVisit = (tasks, nodes) => {
   // Track list of possible nodes to visit
+  const possibleNodes = {};
 
   // Loop through nodes
-  // If node isStart AND tasksToStart is not empty
-    // Add node to possible nodes
-  // If tasksToEnd contains any active task
-    // Add node to possible nodes
+  for (const node in nodes) {
+    const tasksToStart = nodes[node].tasksToStart;
+    const tasksToEnd = nodes[node].tasksToEnd;
+
+    // If node has incomplete tasksToStart
+    if (tasksToStart.some(task => task.isComplete === false)) {
+      // Add node to possible nodes
+      possibleNodes[node] = nodes[node];
+    }
+
+    // If node's tasksToEnd contains any given tasks
+    if (tasksToEnd.some(task => tasks.includes(task.id))) {
+      // Add node to possible nodes
+      possibleNodes[node] = nodes[node];
+    }
+  }
   
   // Return list of possible nodes to visit
+  return possibleNodes;
 };
 
 // Returns a visited node and updated tasks given a node and a list of active tasks

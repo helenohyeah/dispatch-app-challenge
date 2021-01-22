@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon ./server.js localhost 8080",
-    "reset": "curl -i http://localhost:8080/api/resetDb/ -X POST"
+    "reset": "curl -i http://localhost:8080/api/resetDb/ -X POST",
+    "seed": "curl -i http://localhost:8080/api/seedDb/ -X POST"
   },
   "repository": {
     "type": "git",

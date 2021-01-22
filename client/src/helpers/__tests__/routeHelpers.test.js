@@ -4,7 +4,6 @@ import {
   visitNode,
   findShortestPath,
   findShortestRoute,
-  calcNodeDistance,
   generateDistances,
   generateNodes
 } from '../routeHelpers';
@@ -190,10 +189,29 @@ describe('findNodesToVisit', () => {
   });
 });
 
-describe.only('calcNodeDistance', () => {
-  const start = { "lat": 45.422, "lng": -75.697 };
-  const end = { "lat": 45.502, "lng": -73.567 };
-  const result = calcNodeDistance(start, end);
-  console.log(result);
-  expect(result).toEqual(true);
-})
+describe('generateDistances', () => {
+  const nodes = {
+    'A': { coords: { lat: 45.502, lng: -73.567 }},
+    'B': { coords: { lat: 45.422, lng: -75.697 }},
+    'C': { coords: { lat: 43.813, lng: -79.495 }}
+  };
+
+  test('it should generate a hash map of nodes and its distance to all other nodes', () => {
+    const result = {
+      'A': {
+        'B': 166538,
+        'C': 505499
+      },
+      'B': {
+        'A': 166538,
+        'C': 350159
+      },
+      'C': {
+        'A': 505499,
+        'B': 350159
+      }
+    };
+    const distances = generateDistances(nodes);
+    expect(distances).toEqual(result);
+  });
+});

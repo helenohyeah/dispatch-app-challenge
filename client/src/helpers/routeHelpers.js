@@ -142,6 +142,28 @@ const calcNodeDistance = (a, b) => {
 
 // Returns a hash map of each node and it's distance to all other nodes given a hash map of nodes
 const generateDistances = (nodes) => {
+  // Track distances
+  const distances = {};
+
+  const nodeKeys = Object.keys(nodes);
+  
+  for (let i = 0; i < nodeKeys.length - 1; i++) {
+    const firstNode = nodes[nodeKeys[i]];
+    if(!distances[nodeKeys[i]]) distances[nodeKeys[i]] = {};
+
+    for (let j = 1; j < nodeKeys.length; j++) {
+      if (i === j) continue;
+      if (!distances[nodeKeys[j]]) distances[nodeKeys[j]] = {};
+
+      const secondNode = nodes[nodeKeys[j]];
+      const distance = calcNodeDistance(firstNode.coords, secondNode.coords);
+      
+      distances[nodeKeys[i]][nodeKeys[j]] = distance;
+      distances[nodeKeys[j]][nodeKeys[i]] = distance;
+    }
+  }
+  // Return distances
+  return distances;
 };
 
 // Return a hash map of nodes given a list of tasks

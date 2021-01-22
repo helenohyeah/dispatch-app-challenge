@@ -14,26 +14,26 @@ const mockNodes = {
   'A': {
     coords: { lat: 1, lng: 1 },
     isStart: true,
-    tasksToStart: [{ taskId: 1, isComplete: false }],
-    tasksToEnd: [{ taskId: 3, isComplete: false }],
+    tasksToStart: [{ id: 1, isComplete: false }],
+    tasksToEnd: [{ id: 3, isComplete: false }],
   },
   'B': {
     coords: { lat: 2, lng: 6 },
     isStart: true,
-    tasksToStart: [{ taskId: 2, isComplete: false }],
+    tasksToStart: [{ id: 2, isComplete: false }],
     tasksToEnd: [],
   },
   'C': {
     coords: { lat: 5, lng: 1 },
     isStart: true,
-    tasksToStart: [{ taskId: 3, isComplete: false }],
+    tasksToStart: [{ id: 3, isComplete: false }],
     tasksToEnd: [],
   },
   'D': {
     coords: { lat: 6, lng: 3 },
     isStart: false,
     tasksToStart: [],
-    tasksToEnd: [{ taskId: 1, isComplete: false }, { taskId: 2, isComplete: false }],
+    tasksToEnd: [{ id: 1, isComplete: false }, { id: 2, isComplete: false }],
   },
 };
 
@@ -47,9 +47,7 @@ const mockDistances = {
 
 describe('visitNode', () => {
   describe('given a start node', () => {
-    const node = {
-      'A': { isStart: true, tasksToStart: [{ taskId: 1, isComplete: false }, { taskId: 2, isComplete: false}] }
-    };
+    const node = { isStart: true, tasksToStart: [{ id: 1, isComplete: false }, { id: 2, isComplete: false}] };
 
     test('it should mark all tasks as complete and add task ids to active tasks', () => {
       const tasks = [];
@@ -68,9 +66,7 @@ describe('visitNode', () => {
   });
 
   describe('given an end node', () => {
-    const node = {
-      'A': { isStart: false, tasksToEnd: [{ taskId: 1, isComplete: false }, { taskId: 2, isComplete: false}] }
-    };
+    const node = { isStart: false, tasksToEnd: [{ id: 1, isComplete: false }, { id: 2, isComplete: false}] };
 
     test('it should only mark tasks that match given tasks as complete and remove complete tasks from active tasks', () => {
       const tasks = [1];
@@ -89,11 +85,9 @@ describe('visitNode', () => {
 
   describe('given a start and end node', () => {
     const node = {
-      'A': {
-        isStart: true,
-        tasksToStart: [{ taskId: 3, isComplete: false }],
-        tasksToEnd: [{ taskId: 1, isComplete: false }, { taskId: 2, isComplete: false}],
-      }
+      isStart: true,
+      tasksToStart: [{ id: 3, isComplete: false }],
+      tasksToEnd: [{ id: 1, isComplete: false }, { id: 2, isComplete: false}],
     };
 
     test('it should correctly update completed tasks and active tasks', () => {

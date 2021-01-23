@@ -1,8 +1,6 @@
 import isEqual from "lodash.isequal";
-
 import Edit from "./Edit";
 import Show from "./Show";
-
 import useVisualMode from "../../hooks/useVisualMode";
 
 // Visual modes
@@ -11,7 +9,8 @@ const EDIT = "EDIT";
 const SAVING = "SAVING";
 
 export default function Task(props) {
-  const { mode, transition } = useVisualMode(SHOW);
+
+  const { mode, transition, back } = useVisualMode(SHOW);
 
   // Validate and save edits
   const save = (task) => {
@@ -28,7 +27,7 @@ export default function Task(props) {
       // Save task and transition
       // console.log('saving edits');
       transition(SAVING);
-      props.onEdit(task).then(() => transition(SHOW));
+      props.onSubmit(task).then(() => transition(SHOW));
     }
   };
 

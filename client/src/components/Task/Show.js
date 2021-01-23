@@ -1,22 +1,34 @@
-import Button from "../Button";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default function Show(props) {
-  // console.log('Show props:', props);
+
   const task = props.task;
 
   return (
-    <>
-      <p>
-        Start: {task.start.lat}, {task.start.lng} End: {task.end.lat},{" "}
-        {task.end.lng}
-      </p>
-      <p>Freight: {task.freight}</p>
-      {props.canEdit && (
-        <>
-          <Button onClick={props.onEdit}>Edit</Button>
-          <Button onClick={() => props.onDelete(task.id)}>Delete</Button>
-        </>
-      )}
-    </>
+    <Card className="mb-2" style={{ border: `2px solid #${task.color}`}}>
+      <Card.Header>
+        <Row>
+          <Col>
+            Task No. {task.id}
+          </Col>
+          {props.canEdit && (
+            <Col xs="auto">
+              <Button variant="primary" size="sm" onClick={props.onEdit}>Edit</Button>{' '}
+              <Button variant="danger" size="sm" onClick={() => props.onDelete(task.id)}>Delete</Button>
+            </Col>
+          )}
+        </Row>
+      </Card.Header>
+      <Card.Body>
+        <Card.Text>
+          <span className="bold">Start Location:</span> {task.start.City} ({task.start.lat}, {task.end.lng})<br />
+          <span className="bold">End Location:</span> {task.end.City} ({task.end.lat}, {task.end.lng})<br />
+          <span className="bold">Freight:</span> {task.freight}
+        </Card.Text>
+      </Card.Body>
+    </Card>
   );
 }

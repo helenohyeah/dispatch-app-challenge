@@ -1,5 +1,5 @@
+import Add from "./Add";
 import Task from "./Task";
-import Create from "./Create";
 import Map from "./Map";
 
 import useTasks from "../hooks/useTasks";
@@ -32,7 +32,11 @@ export default function App() {
   return (
     <>
       <h1>Hello Dispatcher</h1>
-      <Create onSave={isDuplicateTask} onAdd={addTask} />
+      <Add
+        taskCount={tasks.length}
+        onSave={isDuplicateTask}
+        onAdd={addTask}
+      />
       {tasksList}
       Debug Buttons
       <button onClick={() => setMapMode("VIEW_TASK")}>TaskMap</button>

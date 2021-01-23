@@ -1,3 +1,5 @@
+import Button from "react-bootstrap/Button";
+
 export default function Start(props) {
 
   // Track maximum tasks and set add message
@@ -6,22 +8,23 @@ export default function Start(props) {
 
   let message;
   let isAddTaskDisabled = false;
-  let isGenRouteDisabled = false;
+  let isGenerateRouteDisabled = false;
   if (taskCount === 0 || taskCount === 1) {
     message = 'Add at least 2 tasks to generate a route.';
-    isGenRouteDisabled = true;
+    isGenerateRouteDisabled = true;
   } else if (taskCount === maxTasks) {
     message = 'You added the maximum number of tasks. Generate a route!';
     isAddTaskDisabled = true;
   } else {
-    message = 'Add a task or generate a route.'
+    message = 'Add more tasks or generate a route.'
   }
 
   return (
     <>
-      <h3>{`${taskCount}/${maxTasks} Tasks. ${message}`}</h3>
-      <button disabled={isAddTaskDisabled} onClick={props.onAddTask}>Add Task</button>
-      <button disabled={isGenRouteDisabled} onClick={props.onGenerate}>Generate Route</button>
+      <h2>{message}</h2>
+      <p>You have {taskCount} tasks (max {maxTasks}).</p>
+      <Button variant="primary" disabled={isAddTaskDisabled} onClick={props.onAddTask}>Add Task</Button>{' '}
+      <Button variant="success" disabled={isGenerateRouteDisabled} onClick={props.onGenerate}>Generate Route</Button>
     </>
   );
 }

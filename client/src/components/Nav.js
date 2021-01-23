@@ -3,7 +3,7 @@ import "./Nav.css";
 
 export default function Nav() {
   return (
-  <Navbar bg="primary" variant="dark" expand="lg">
+  <Navbar className="mb-3" bg="primary" variant="dark" expand="lg">
     <Navbar.Brand href="/">Dispatcher App</Navbar.Brand>
     <Navbar.Text>
       Hello, Dispatcher!

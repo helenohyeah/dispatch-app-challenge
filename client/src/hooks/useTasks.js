@@ -69,7 +69,9 @@ export default function useTasks() {
       });
   }
 
-  // Check if task already exists
+  /**
+   * Check if given task already exists
+   */
   function isDuplicateTask(taskToCheck) {
     return tasks.some(task => isEqual(omit(task, ['id', 'color']), omit(taskToCheck, ['id', 'color'])));
   }

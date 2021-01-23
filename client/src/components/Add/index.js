@@ -1,8 +1,8 @@
 import Start from "./Start";
 import AddTask from "./AddTask";
-
 import useVisualMode from "../../hooks/useVisualMode";
-import { getColor } from "../../helpers/colorHelpers";
+
+import Jumbotron from "react-bootstrap/Jumbotron";
 
 // Visual modes
 const START = "START";
@@ -12,21 +12,7 @@ const HAVE_ROUTE = "HAVE_ROUTE";
 
 export default function Create(props) {
   
-  const { mode, transition } = useVisualMode(START);
-
-  // Validate and save task
-  const save = (task) => {
-    if (props.onSave(task)) {
-      // Duplicate task show alert
-      alert("Duplicate task");
-    } else {
-      // Save task and transition
-      transition(ADDING);
-      // Assign color to task
-      task.color = getColor();
-      props.onAdd(task).then(() => transition(START));
-    }
-  };
+  const { mode, transition, back } = useVisualMode(START);
 
   const generateRoute = () => {
     props.onGenerateRoute(true);
@@ -35,7 +21,7 @@ export default function Create(props) {
   };
 
   return (
-    <>
+    <Jumbotron>
       {mode === START && (
         <Start
           onAddTask={() => transition(ADD_TASK)}
@@ -43,9 +29,17 @@ export default function Create(props) {
           taskCount={props.taskCount}
         />)
       }
-      {mode === ADD_TASK && <AddTask onSave={save} />}
+      {mode === ADD_TASK && (
+        <AddTask
+          onAdd={() => transition(ADDING)}
+          onDone={() => transition(START)}
+          onSubmit={props.onSubmit}
+          onBack={back}
+          onCheckDupes={props.onCheckDupes}
+        />
+      )}
       {mode === HAVE_ROUTE && <p>Route generated</p>}
       {mode === ADDING && <p>Adding Task...</p>}
-    </>
+    </Jumbotron>
   );
 }

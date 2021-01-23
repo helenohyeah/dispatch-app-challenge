@@ -4,6 +4,9 @@ import Add from "./Add";
 import Task from "./Task";
 import Map from "./Map";
 import useTasks from "../hooks/useTasks";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import "./App.css";
 
@@ -32,7 +35,7 @@ const [ mapMode, setMapMode ] = useState("VIEW_TASK");
       key={task.id}
       data={task}
       onSave={isDuplicateTask}
-      onEdit={updateTask}
+      onSubmit={updateTask}
       onDelete={deleteTask}
       canEdit={showRoute === false}
     />
@@ -42,20 +45,27 @@ const [ mapMode, setMapMode ] = useState("VIEW_TASK");
   return (
     <>
       <Nav />
-      <Add
-        taskCount={tasks.length}
-        onSave={isDuplicateTask}
-        onAdd={addTask}
-        onGenerateRoute={setShowRoute}
-        setMapMode={setMapMode}
-      />
-      {tasksList}
-      <Map
-        data={tasks}
-        showRoute={showRoute}
-        mapMode={mapMode}
-        setMapMode={setMapMode}
-      />
+      <Container fluid>
+        <Row>
+          <Col>
+            <Add
+              taskCount={tasks.length}
+              onSave={isDuplicateTask}
+              onSubmit={addTask}
+              onGenerateRoute={setShowRoute}
+              setMapMode={setMapMode}
+              onCheckDupes={isDuplicateTask}
+            />
+          </Col>
+        </Row>
+        {tasksList}
+        <Map
+          data={tasks}
+          showRoute={showRoute}
+          mapMode={mapMode}
+          setMapMode={setMapMode}
+        />
+      </Container>
     </>
   );
 }

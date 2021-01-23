@@ -11,26 +11,32 @@ const PORT = 8080;
 
 const router = jsonServer.router(db);
 
-// Middleware
-
 server.use(cors());
 server.use(morgan('dev'));
 
-// Routes using json-server as database
-
-server.use((req, res, next) => {
-  console.log(req.method, req.path)
-  if (req.method === 'POST' && req.path === '/api/resetDb/') {
-    const initialDb = fs.readFileSync(path.join(__dirname, 'initialDb.json'), 'utf8');
-    fs.writeFileSync(path.join(__dirname, 'db.json'), initialDb);
-    router.db.setState(JSON.parse(initialDb));
-    res.sendStatus(200);
-  } else {
-    next();
-  }
+// Reset server
+server.post("/api/resetDb", (req, res) => {
+  fs.readFile(path.join(__dirname, 'initialDb.json'), 'utf8', (err, db) => {
+    if (err) throw err;
+    fs.writeFile(path.join(__dirname, 'db.json'), db, () => {
+      router.db.setState(JSON.parse(db));
+      res.sendStatus(200);
+    });
+  });
 });
+
+// Seed server
+server.post("/api/seedDb", (req, res) => {
+  fs.readFile(path.join(__dirname, 'seeds.json'), 'utf8', (err, db) => {
+    if (err) throw err;
+    fs.writeFile(path.join(__dirname, 'db.json'), db, () => {
+      router.db.setState(JSON.parse(db));
+      res.sendStatus(200);
+    })
+  });
+});
+
+// Set routes using json-server mock database
 server.use('/api', router);
 
-server.listen(PORT, () => {
-  console.log(`Server listening at http://localhost:${PORT}`);
-});
+server.listen(PORT, () => console.log(`Server listening at http://localhost:${PORT}`));

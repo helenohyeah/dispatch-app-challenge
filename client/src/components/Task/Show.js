@@ -1,4 +1,4 @@
-import Button from './Button';
+import Button from "../Button";
 
 export default function Show(props) {
   // console.log('Show props:', props);
@@ -6,11 +6,17 @@ export default function Show(props) {
 
   return (
     <>
-      <p>Start: {task.startLat}, {task.startLng} End: {task.endLat}, {task.endLng}</p>
+      <p>
+        Start: {task.start.lat}, {task.start.lng} End: {task.end.lat},{" "}
+        {task.end.lng}
+      </p>
       <p>Freight: {task.freight}</p>
-      <Button>View on Map(WIP)</Button>
-      <Button onClick={props.onEdit}>Edit</Button>
-      <Button onClick={() => props.onDelete(task.id)}>Delete</Button>
+      {props.canEdit && (
+        <>
+          <Button onClick={props.onEdit}>Edit</Button>
+          <Button onClick={() => props.onDelete(task.id)}>Delete</Button>
+        </>
+      )}
     </>
   );
 }

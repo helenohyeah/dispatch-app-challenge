@@ -23,7 +23,7 @@ const taskReducer = (state, action) => {
     default:
       return state;
   }
-}
+};
 
 export default function useTasks() {
 

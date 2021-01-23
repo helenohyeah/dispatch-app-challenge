@@ -1,9 +1,10 @@
 import { useState } from "react";
+import Nav from "./Nav";
 import Add from "./Add";
 import Task from "./Task";
 import Map from "./Map";
 import useTasks from "../hooks/useTasks";
-import Button from "react-bootstrap/Button";
+
 import "./App.css";
 
 export default function App() {
@@ -40,7 +41,7 @@ const [ mapMode, setMapMode ] = useState("VIEW_TASK");
 
   return (
     <>
-        <Button>Hello I'm a Bootstrap Button</Button>
+      <Nav />
       <Add
         taskCount={tasks.length}
         onSave={isDuplicateTask}

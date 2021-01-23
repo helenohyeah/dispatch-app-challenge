@@ -51,8 +51,8 @@ export default function useMap() {
     const routePath = route.map(node => node[Object.keys(node)[0]].coords);
     
     // Create markers at start and end of route
-    routeMarkers.push(createMarker(routePath[0].coords, true));
-    routeMarkers.push(createMarker(routePath[routePath.length - 1].coords, false));
+    routeMarkers.push(createMarker(routePath[0], true));
+    routeMarkers.push(createMarker(routePath[routePath.length - 1], false));
 
     // Create polylines
     const routePolylines = createPolyline(routePath);

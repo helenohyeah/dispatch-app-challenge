@@ -1,6 +1,5 @@
 import Start from "./Start";
 import AddTask from "./AddTask";
-import AddRoute from "./AddRoute";
 
 import useVisualMode from "../../hooks/useVisualMode";
 import { getColor } from "../../helpers/colorHelpers";
@@ -9,8 +8,7 @@ import { getColor } from "../../helpers/colorHelpers";
 const START = "START";
 const ADD_TASK = "ADD_TASK";
 const ADDING = "ADDING";
-const GENERATE_ROUTE = "GENERATE_ROUTE";
-const GENERATING = "GENERATING";
+const HAVE_ROUTE = "HAVE_ROUTE";
 
 export default function Create(props) {
   
@@ -30,11 +28,10 @@ export default function Create(props) {
     }
   };
 
-  const generateRoute = (tasks) => {
-    transition(GENERATING);
-    // generate route on map
-    // transition to ViewRoute
-    // transition tasks to ??
+  const generateRoute = () => {
+    props.onGenerateRoute(true);
+    props.setMapMode("VIEW_ROUTE")
+    transition(HAVE_ROUTE);
   };
 
   return (
@@ -47,9 +44,8 @@ export default function Create(props) {
         />)
       }
       {mode === ADD_TASK && <AddTask onSave={save} />}
-      {mode === GENERATE_ROUTE && <AddRoute />}
+      {mode === HAVE_ROUTE && <p>Route generated</p>}
       {mode === ADDING && <p>Adding Task...</p>}
-      {mode === GENERATING && <p>Generating Route...</p>}
     </>
   );
 }

@@ -1,8 +1,7 @@
 import { useState } from "react";
 
-export default function useVisualMode(initMode, initMapMode) {
-  const [mode, setMode] = useState(initMode);
-  const [mapMode, setMapMode] = useState(initMapMode);
+export default function useVisualMode(initial) {
+  const [mode, setMode] = useState(initial);
 
   const transition = (mode) => {
     setMode(mode);
@@ -10,7 +9,6 @@ export default function useVisualMode(initMode, initMapMode) {
 
   return {
     mode,
-    mapMode,
-    setMapMode
+    transition
   };
 }

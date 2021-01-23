@@ -1,13 +1,20 @@
+import { useState } from "react";
 import Add from "./Add";
 import Task from "./Task";
 import Map from "./Map";
-
 import useTasks from "../hooks/useTasks";
-import useVisualMode from "../hooks/useVisualMode";
-
 import "./App.css";
 
 export default function App() {
+
+  const [ showRoute, setShowRoute ] = useState(false);
+
+// Map modes
+const VIEW_TASK = "VIEW_TASK";
+const VIEW_ROUTE = "VIEW_ROUTE";
+  const [ mapMode, setMapMode ] = useState("VIEW_TASK");
+
+
   const {
     tasks,
     addTask,
@@ -15,7 +22,6 @@ export default function App() {
     deleteTask,
     isDuplicateTask,
   } = useTasks();
-  const { mapMode, setMapMode } = useVisualMode(null, "EMPTY");
 
   // console.log('App tasks:', tasks);
   const tasksList = tasks.map((task) => (
@@ -25,6 +31,7 @@ export default function App() {
       onSave={isDuplicateTask}
       onEdit={updateTask}
       onDelete={deleteTask}
+      canEdit={showRoute === false}
     />
   ));
   console.log("tasksList:", tasksList);
@@ -36,16 +43,15 @@ export default function App() {
         taskCount={tasks.length}
         onSave={isDuplicateTask}
         onAdd={addTask}
+        onGenerateRoute={setShowRoute}
+        setMapMode={setMapMode}
       />
       {tasksList}
-      Debug Buttons
-      <button onClick={() => setMapMode("VIEW_TASK")}>TaskMap</button>
-      <button onClick={() => setMapMode("VIEW_ROUTE")}>RouteMap</button>
-      <br />
       <Map
         data={tasks}
-        onTransition={setMapMode}
-        mode={mapMode}
+        showRoute={showRoute}
+        mapMode={mapMode}
+        setMapMode={setMapMode}
       />
     </>
   );

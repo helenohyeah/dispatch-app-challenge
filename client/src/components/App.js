@@ -15,7 +15,7 @@ export default function App() {
     deleteTask,
     isDuplicateTask,
   } = useTasks();
-  const { mapMode, setMapMode } = useVisualMode(null, "TASK");
+  const { mapMode, setMapMode } = useVisualMode(null, "EMPTY");
 
   // console.log('App tasks:', tasks);
   const tasksList = tasks.map((task) => (
@@ -34,6 +34,10 @@ export default function App() {
       <h1>Hello Dispatcher</h1>
       <Create onSave={isDuplicateTask} onAdd={addTask} />
       {tasksList}
+      Debug Buttons
+      <button onClick={() => setMapMode("VIEW_TASK")}>TaskMap</button>
+      <button onClick={() => setMapMode("VIEW_ROUTE")}>RouteMap</button>
+      <br />
       <Map
         data={tasks}
         onTransition={setMapMode}

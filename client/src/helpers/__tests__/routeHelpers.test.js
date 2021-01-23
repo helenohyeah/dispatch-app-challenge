@@ -351,8 +351,8 @@ describe("findShortestRoute", () => {
     ]);
   });
 
-  test("it should return an empty array given null nodes", () => {
-    const nodes = null;
+  test("it should return an empty array given no nodes", () => {
+    const nodes = {};
     expect(findShortestRoute(nodes)).toEqual([]);;
   });
 });
@@ -412,8 +412,8 @@ describe("generateNodes", () => {
 
   describe("given a list of empty tasks", () => {
     const tasks = [];
-    test("it should return null", () => {
-      expect(generateNodes(tasks)).toBeNull();
+    test("it should return an empty object", () => {
+      expect(generateNodes(tasks)).toEqual({});
     });
   });
 })

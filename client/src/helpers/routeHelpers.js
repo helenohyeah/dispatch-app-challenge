@@ -159,7 +159,7 @@ const findShortestRoute = (nodes) => {
   let distance = 0;
   // Track shortest route
   let shortest;
-  if (nodes === null) return shortest = [];
+  if (Object.keys(nodes).length === 0) return shortest = [];
 
   // Get start nodes
   const startNodeKeys = Object.keys(nodes).filter(node => nodes[node].tasksToStart.length);
@@ -192,7 +192,7 @@ const calcNodeDistance = (a, b) => {
 // Return a hash map of nodes given a list of tasks
 const generateNodes = (tasks) => {
   let nodes = {};
-  if (tasks.length === 0) return nodes = null;
+  if (tasks.length === 0) return nodes;
 
   tasks.forEach(task => {
     // Add taskToStart to node

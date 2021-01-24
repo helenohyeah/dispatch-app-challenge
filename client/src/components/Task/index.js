@@ -1,7 +1,7 @@
-import Card from "react-bootstrap/Card";
 import Edit from "./Edit";
 import Show from "./Show";
 import Load from "../Load";
+import Card from "react-bootstrap/Card";
 import useVisualMode from "../../hooks/useVisualMode";
 
 // Visual modes
@@ -12,9 +12,12 @@ const SAVING = "SAVING";
 export default function Task(props) {
 
   const { mode, transition, back } = useVisualMode(SHOW);
+  
+  // Style task card with task color
+  const cardStyle = { border: `2px solid ${props.data.color}` };
 
   return (
-    <Card className="mb-2" style={{ border: `2px solid #${props.data.color}`}}>
+    <Card className="mb-2" style={cardStyle}>
       {mode === SHOW && (
         <Show
           task={props.data}

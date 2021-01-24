@@ -5,7 +5,7 @@ import { getCoords, getLatLngCenter } from "../helpers/mapHelpers";
 export default function useMap() {
 
   /**
-   * Returns a map marker given a position and isStart
+   * Returns a map marker given a position and if marker is a start maker
    */
   const createMarker = (position, isStart) => {
     const icon = isStart ? "http://maps.google.com/mapfiles/ms/icons/green-dot.png" : "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
@@ -13,11 +13,9 @@ export default function useMap() {
   };
 
   /**
-   * Returns a map polyline given a lat lng coordinate and options
+   * Returns a map polyline given lat lng coordinates
    */
-  const createPolyline = (coords, options) => {
-    return <Polyline path={coords} options={options} />
-  };
+  const createPolyline = (coords, options) => <Polyline path={coords} options={options} />;
 
   /**
    * Returns task markers and polylines given a list of tasks
@@ -32,7 +30,7 @@ export default function useMap() {
       taskMarkers.push(createMarker(task.end,false));
       taskPolylines.push(createPolyline(
         [task.start, task.end],
-        { strokeColor: `#${task.color}` }
+        { strokeColor: task.color }
       ));
     });
 
@@ -43,7 +41,8 @@ export default function useMap() {
    * Returns route markers and polylines given a list of tasks
    */
   const createRouteMap = (tasks) => {
-    if (tasks.length === 0) return { routeMarkers: [], routePolylines: []}; // Note: Shouldn't ever happen in production
+    // Handle renders when no tasks are provided
+    if (tasks.length === 0) return { routeMarkers: [], routePolylines: []};
 
     const routeMarkers = [];
 

@@ -8,9 +8,15 @@ export default function useVisualMode(initial) {
   /**
    * Transition to given mode and updates history
    */
-  const transition = (mode) => {
+  const transition = (mode, replace = false) => {
     setMode(mode);
-    setHistory(prev => [ ...prev, mode]);
+    if (replace) {
+      const tempHistory = [...history];
+      tempHistory.pop();
+      setHistory([...tempHistory, mode]);
+    } else {
+      setHistory(prev => [ ...prev, mode]);
+    }
   };
 
   /**

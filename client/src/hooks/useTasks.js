@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from "react";
+import { useReducer } from "react";
 import axios from "axios";
 import isEqual from "lodash.isequal";
 import omit from "lodash.omit";
@@ -12,7 +12,7 @@ const DELETE_TASK = "DELETE_TASK";
 /**
  * Manage state transitions for tasks
  */
-const taskReducer = (state, action) => {
+const tasksReducer = (state, action) => {
   switch (action.type) {
     case GET_TASKS:
       return [ ...action.tasksData ];
@@ -27,26 +27,24 @@ const taskReducer = (state, action) => {
   }
 };
 
-export default function useTasks(actions) {
+export default function useTasks() {
 
-  const [ tasks, dispatchTasks ] = useReducer(taskReducer, []);
+  const [ tasks, dispatchTasks ] = useReducer(tasksReducer, []);
 
   // Server url
   axios.defaults.baseURL = process.env.REACT_APP_SERVER_BASE_URL || "http://localhost:8080";
 
-  // Get tasks from server and set state on load
-  useEffect(() => {
-    axios.get("/api/tasks")
+ 
+  /**
+   * Get tasks from server and add to state
+   */
+  const getTasks = () => {
+    return axios.get("/api/tasks")
       .then(res => {
         const tasksData = res.data;
         dispatchTasks({ type: GET_TASKS, tasksData });
-        actions.showPage();
-      })
-      .catch(err => {
-        actions.showError(err);
-        console.log("Error getting tasks data:", err);
       });
-  }, [actions]);
+  };
 
   /**
    * Create a new task and add to state
@@ -87,6 +85,7 @@ export default function useTasks(actions) {
 
   return {
     tasks,
+    getTasks,
     addTask,
     updateTask,
     deleteTask,

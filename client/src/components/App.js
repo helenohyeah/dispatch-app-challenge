@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavTop from "./NavTop";
 import NavBot from "./NavBot";
 import Add from "./Add";
@@ -25,29 +25,30 @@ export default function App() {
 
   // Tracks whether a route is generated and can be shown
   const [ showRoute, setShowRoute ] = useState(false);
+  // Map modes
   const [ mapMode, setMapMode ] = useState(TASKS);
 
-  /**
-   * Set page to show route map and prevent task changes
-   */
-  const showRouteMap = () => {
-    setShowRoute(true);
-    setMapMode(ROUTE);
-  };
-
-  // Handle page visual modes
+  // Page visual modes
   const { mode, transition } = useVisualMode(LOADING);
-  const showPage = () => transition(SHOW);
-  const showError = () => transition(ERROR);
-
   // Task handlers
   const {
     tasks,
+    getTasks,
     addTask,
     updateTask,
     deleteTask,
     isDuplicateTask
-  } = useTasks({ showPage, showError });
+  } = useTasks();
+
+  // Get tasks data on load and transition page
+  useEffect(() => {
+    getTasks()
+      .then(() => transition(SHOW))
+      .catch((err) => {
+        transition(ERROR);
+        console.log("Error getting tasks data:", err);
+      });
+  }, []);
 
   // Generate task list
   const tasksList = tasks.map(task => (
@@ -60,6 +61,14 @@ export default function App() {
       canEdit={showRoute === false}
     />
   ));
+  
+  /**
+   * Set page to show route map and prevent task changes
+   */
+  const showRouteMap = () => {
+    setShowRoute(true);
+    setMapMode(ROUTE);
+  };
 
   return (
     <>

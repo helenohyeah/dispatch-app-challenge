@@ -1,3 +1,25 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "id": 1,
+      "color": "#FF0000",
+      "start": { "city": "Montreal", "lat": 45.502, "lng": -73.567 },
+      "end": { "city": "Toronto", "lat": 43.653, "lng": -79.383 },
+      "freight": "Produce"
+    },
+    {
+      "id": 2,
+      "color": "#008000",
+      "start": { "city": "Ottawa", "lat": 45.422, "lng": -75.697 },
+      "end": { "city": "Toronto", "lat": 43.653, "lng": -79.383 },
+      "freight": "Groceries"
+    },
+    {
+      "id": 3,
+      "color": "#0000FF",
+      "start": { "city": "Concord", "lat": 43.813, "lng": -79.495 },
+      "end": { "city": "Montreal", "lat": 45.502, "lng": -73.567 },
+      "freight": "Produce"
+    }
+  ]
 }

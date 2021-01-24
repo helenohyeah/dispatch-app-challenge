@@ -1,6 +1,7 @@
 import Start from "./Start";
 import AddTask from "./AddTask";
 import Load from "../Load";
+import Error from "../Error"
 import Jumbotron from "react-bootstrap/Jumbotron";
 import useVisualMode from "../../hooks/useVisualMode";
 
@@ -9,6 +10,7 @@ const START = "START";
 const ADD_TASK = "ADD_TASK";
 const ADDING = "ADDING";
 const HAVE_ROUTE = "HAVE_ROUTE";
+const ERROR = "ERROR";
 
 export default function Add(props) {
   
@@ -35,6 +37,7 @@ export default function Add(props) {
         <AddTask
           showAdding={() => transition(ADDING)}
           showStart={() => transition(START)}
+          showError={() => transition(ERROR)}
           onSubmit={props.onSubmit}
           onBack={back}
           onCheckDupes={props.onCheckDupes}
@@ -43,6 +46,7 @@ export default function Add(props) {
       )}
       {mode === HAVE_ROUTE && <h2>Your route is generated.</h2>}
       {mode === ADDING && <Load>Adding task...</Load>}
+      {mode === ERROR && <Error>😥 Something went wrong</Error>}
     </Jumbotron>
   );
 }

@@ -10,7 +10,12 @@ export default function Edit(props) {
     // Transition to loading spinner
     props.onEdit();
     // Submit form and transition
-    props.onSubmit(task).then(() => props.onDone());
+    props.onSubmit(task)
+      .then(() => props.onDone())
+      .catch(err => {
+        props.onError();
+        console.log("Error saving task changes:", err);
+      });
   };
 
   return (

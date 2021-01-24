@@ -12,7 +12,12 @@ export default function AddTask(props) {
     // Assign task color
     task.color = getRandColor(props.taskCount + 1);
     // Submit form and transition
-    props.onSubmit(task).then(() => props.showStart());
+    props.onSubmit(task)
+      .then(() => props.showStart())
+      .catch(err => {
+        props.showError();
+        console.log("Error adding task:", err);
+      });
   };
   
   return (

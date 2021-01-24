@@ -17,8 +17,8 @@
     {
       "id": 3,
       "color": "#0000FF",
-      "start": { "city": "Concord", "lat": 43.813, "lng": -79.495 },
-      "end": { "city": "Montreal", "lat": 45.502, "lng": -73.567 },
+      "start": { "city": "Hamilton", "lat": 43.256, "lng": -79.871 },
+      "end": { "city": "Sudbury", "lat": 46.522, "lng": -80.953 },
       "freight": "Produce"
     }
   ]

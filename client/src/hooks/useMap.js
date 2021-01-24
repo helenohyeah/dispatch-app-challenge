@@ -4,12 +4,16 @@ import { getCoords, getLatLngCenter } from "../helpers/mapHelpers";
 
 export default function useMap() {
 
+  // Map Marker icons
+  // Taken from https://sites.google.com/site/gmapsdevelopment/
+  const startIcon = "http://maps.google.com/mapfiles/kml/paddle/grn-blank.png";
+  const endIcon = "http://maps.google.com/mapfiles/kml/paddle/red-blank.png";
+
   /**
-   * Returns a map marker given a coordinate and if marker is a start maker
+   * Returns a map marker given a coordinate and marker icon url (default: yellow)
    */
-  const createMarker = (coord, isStart) => {
-    const icon = isStart ? "http://maps.google.com/mapfiles/ms/icons/green-dot.png" : "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
-    return <Marker key={`${coord.lat},${coord.lng}`} position={coord} icon={icon} />;
+  const createMarker = (coord, iconUrl) => {
+    return <Marker key={`${coord.lat},${coord.lng}`} position={coord} icon={iconUrl} />;
   };
 
   /**
@@ -26,8 +30,8 @@ export default function useMap() {
 
     // Create markers and polyline for each task
     tasks.forEach(task => {
-      taskMarkers.push(createMarker(task.start, true));
-      taskMarkers.push(createMarker(task.end,false));
+      taskMarkers.push(createMarker(task.start, startIcon));
+      taskMarkers.push(createMarker(task.end,endIcon));
       taskPolylines.push(createPolyline(
         [task.start, task.end],
         { strokeColor: task.color }
@@ -49,10 +53,12 @@ export default function useMap() {
     const nodes = generateNodes(tasks);
     const route = findShortestRoute(nodes);
     const routePath = route.map(node => node[Object.keys(node)[0]].coords);
-    
-    // Create markers at start and end of route
-    routeMarkers.push(createMarker(routePath[0], true));
-    routeMarkers.push(createMarker(routePath[routePath.length - 1], false));
+
+    // Create numbered markers at each stop
+    routePath.forEach((node, i) => {
+      const markerIcon = `http://maps.google.com/mapfiles/kml/paddle/${i + 1}.png`;
+      routeMarkers.push(createMarker(node, markerIcon));
+    });
 
     // Create polylines
     const routePolylines = createPolyline(routePath);

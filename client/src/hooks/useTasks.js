@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, useState } from 'react';
 import axios from 'axios';
 import isEqual from 'lodash.isequal';
 import omit from 'lodash.omit';
@@ -27,8 +27,8 @@ const taskReducer = (state, action) => {
 
 export default function useTasks() {
 
-  const initialTasks = [];
-  const [tasks, dispatchTasks] = useReducer(taskReducer, initialTasks);
+  const [ tasks, dispatchTasks ] = useReducer(taskReducer, []);
+  const [ areTasksLoaded, setAreTasksLoaded ] = useState(false);
 
   // Server url
   axios.defaults.baseURL = 'http://localhost:8080';
@@ -39,6 +39,7 @@ export default function useTasks() {
       .then(res => {
         const tasksData = res.data;
         dispatchTasks({ type: GET_TASKS, tasksData });
+        setAreTasksLoaded(true);
       })
       .catch(err => console.log('Error getting tasks data:', err));
   }, []);
@@ -81,6 +82,7 @@ export default function useTasks() {
     addTask,
     updateTask,
     deleteTask,
-    isDuplicateTask
+    isDuplicateTask,
+    areTasksLoaded
   };
 }

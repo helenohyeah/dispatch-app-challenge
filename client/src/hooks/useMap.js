@@ -1,5 +1,6 @@
 import { Marker, Polyline } from "react-google-maps";
-import { generateNodes, findShortestRoute } from '../helpers/routeHelpers';
+import { generateNodes, findShortestRoute } from "../helpers/routeHelpers";
+import { getCoords, getLatLngCenter } from "../helpers/mapHelpers";
 
 export default function useMap() {
 
@@ -58,10 +59,20 @@ export default function useMap() {
     const routePolylines = createPolyline(routePath);
     
     return { routeMarkers, routePolylines };
-  }
+  };
+
+  /**
+   * Returns center coordinate given a list of tasks
+   */
+  const getCenterCoords = (tasks) => {
+    const coords = getCoords(tasks);
+    const center = getLatLngCenter(coords);
+    return center;
+  };
 
   return {
     createTaskMap,
-    createRouteMap
+    createRouteMap,
+    getCenterCoords,
   };
 }

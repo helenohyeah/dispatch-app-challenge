@@ -1,6 +1,9 @@
-// Returns center coordinates given an array of latitude and longitude coordinates in degrees
-// e.g. [[latitude, longitude], [latitude, longitude]]
-// DENYS:  loosely based on code from: https://<some link here>
+import isEqual from "lodash.isequal";
+
+/**
+ * Returns center coordinates given a list of lat lng coordinates
+ * Based on code from: https://stackoverflow.com/questions/6671183/calculate-the-center-point-of-multiple-latitude-longitude-coordinate-pairs
+ */
 const getLatLngCenter = (coords) => {
   const radToDeg = (rad) => (rad * 180) / Math.PI;
   const degToRad = (deg) => (deg * Math.PI) / 180;
@@ -37,20 +40,23 @@ const getLatLngCenter = (coords) => {
   return { lat: centerLat, lng: centerLng };
 };
 
-// Returns an array of coordinates given tasks
+/**
+ * Returns a list of lat lng coordinates given a list of tasks
+ */
 const getCoords = (tasks) => {
-  if (!tasks[0]) return null;
-
-  const isSameCoord = (a, b) => a[0] === b[0] && a[1] === b[1];
-
   const coords = [];
-  tasks.forEach((task) => {
+
+  if (tasks.length === 0) return coords;
+
+  tasks.forEach(task => {
     const startCoord = [task.start.lat, task.start.lng];
     const endCoord = [task.end.lat, task.end.lng];
-    if (!coords.some((coord) => isSameCoord(coord, startCoord)))
+    if (!coords.some(coord => isEqual(coord, startCoord))) {
       coords.push(startCoord);
-    if (!coords.some((coord) => isSameCoord(coord, endCoord)))
+    }
+    if (!coords.some(coord => isEqual(coord, endCoord))) {
       coords.push(endCoord);
+    }
   });
 
   return coords;

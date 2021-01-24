@@ -55,10 +55,29 @@ export default function TaskForm(props) {
       <Form.Group as={Row}>
         <Form.Label column sm={2}>Location:</Form.Label>
           <Col>
-            <Form.Control id="startLat" required type="number" placeholder="Latitude" step="any" onChange={e => handleChange(e)} value={task.start.lat} />
+            <Form.Control 
+              id="startLat" 
+              required 
+              type="number" 
+              placeholder="Latitude" 
+              step="any" 
+              onChange={e => handleChange(e)} 
+              value={task.start.lat}
+              min={-90}
+              max={90}
+            />
           </Col>
           <Col>
-            <Form.Control id="startLng" required type="number" placeholder="Longitude" step="any" onChange={e => handleChange(e)} value={task.start.lng} />
+            <Form.Control 
+              id="startLng" 
+              required type="number" 
+              placeholder="Longitude" 
+              step="any" 
+              onChange={e => handleChange(e)} 
+              value={task.start.lng}
+              min={-180}
+              max={180}
+            />
           </Col>
       </Form.Group>
 
@@ -66,14 +85,32 @@ export default function TaskForm(props) {
       <Form.Group as={Row} controlId="endCity">
         <Form.Label column sm={2}>City:</Form.Label>
         <Col>
-          <Form.Control required type="text" placeholder="e.g. Ottawa" onChange={e => handleChange(e)} value={task.end.city} />
+          <Form.Control 
+            required 
+            type="text" 
+            placeholder="e.g. Ottawa" 
+            onChange={e => handleChange(e)} 
+            value={task.end.city} 
+            min={-180}
+            max={180}
+          />
         </Col>
       </Form.Group>
 
       <Form.Group as={Row}>
         <Form.Label column sm={2}>Location:</Form.Label>
           <Col>
-            <Form.Control id="endLat" required type="number" placeholder="Latitude" step="any" onChange={e => handleChange(e)} value={task.end.lat} />
+            <Form.Control 
+              id="endLat" 
+              required 
+              type="number" 
+              placeholder="Latitude" 
+              step="any" 
+              onChange={e => handleChange(e)} 
+              value={task.end.lat}
+              min={-90}
+              max={90}
+            />
           </Col>
           <Col>
             <Form.Control id="endLng" required type="number" placeholder="Longitude" step="any" onChange={e => handleChange(e)} value={task.end.lng} />

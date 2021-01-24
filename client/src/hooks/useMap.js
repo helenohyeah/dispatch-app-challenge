@@ -5,17 +5,17 @@ import { getCoords, getLatLngCenter } from "../helpers/mapHelpers";
 export default function useMap() {
 
   /**
-   * Returns a map marker given a position and if marker is a start maker
+   * Returns a map marker given a coordinate and if marker is a start maker
    */
-  const createMarker = (position, isStart) => {
+  const createMarker = (coord, isStart) => {
     const icon = isStart ? "http://maps.google.com/mapfiles/ms/icons/green-dot.png" : "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
-    return <Marker position={position} icon={icon} />;
+    return <Marker key={`${coord.lat},${coord.lng}`} position={coord} icon={icon} />;
   };
 
   /**
    * Returns a map polyline given lat lng coordinates
    */
-  const createPolyline = (coords, options) => <Polyline path={coords} options={options} />;
+  const createPolyline = (coords, options) => <Polyline key={`${coords[0].lat},${coords[0].lng}`} path={coords} options={options} />;
 
   /**
    * Returns task markers and polylines given a list of tasks

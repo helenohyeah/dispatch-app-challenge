@@ -10,15 +10,14 @@ import Col from "react-bootstrap/Col";
 
 import "./App.css";
 
+// Map modes
+const TASKS = "TASKS";
+const ROUTE = "ROUTE";
+
 export default function App() {
 
   const [ showRoute, setShowRoute ] = useState(false);
-
-// Map modes
-const VIEW_TASK = "VIEW_TASK";
-const VIEW_ROUTE = "VIEW_ROUTE";
-
-const [ mapMode, setMapMode ] = useState("VIEW_TASK");
+  const [ mapMode, setMapMode ] = useState(TASKS);
 
 
   const {
@@ -40,7 +39,7 @@ const [ mapMode, setMapMode ] = useState("VIEW_TASK");
       canEdit={showRoute === false}
     />
   ));
-  console.log("tasksList:", tasksList);
+  // console.log("tasksList:", tasksList);
 
   return (
     <>
@@ -52,7 +51,7 @@ const [ mapMode, setMapMode ] = useState("VIEW_TASK");
               taskCount={tasks.length}
               onSave={isDuplicateTask}
               onSubmit={addTask}
-              onGenerateRoute={setShowRoute}
+              onGenerateRoute={() => setShowRoute(true)}
               setMapMode={setMapMode}
               onCheckDupes={isDuplicateTask}
             />
@@ -61,7 +60,7 @@ const [ mapMode, setMapMode ] = useState("VIEW_TASK");
         {tasksList}
         <Map
           data={tasks}
-          showRoute={showRoute}
+          isRouteDisabled={showRoute === false}
           mapMode={mapMode}
           setMapMode={setMapMode}
         />

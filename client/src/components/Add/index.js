@@ -15,20 +15,20 @@ export default function Create(props) {
   const { mode, transition, back } = useVisualMode(START);
 
   const generateRoute = () => {
-    props.onGenerateRoute(true);
-    props.setMapMode("VIEW_ROUTE")
+    props.onGenerateRoute();
+    props.setMapMode("ROUTE")
     transition(HAVE_ROUTE);
   };
 
   return (
-    <Jumbotron>
+    <Jumbotron className="pb-3 pt-3">
       {mode === START && (
         <Start
           onAddTask={() => transition(ADD_TASK)}
           onGenerate={generateRoute}
           taskCount={props.taskCount}
-        />)
-      }
+        />
+      )}
       {mode === ADD_TASK && (
         <AddTask
           onAdd={() => transition(ADDING)}
@@ -38,7 +38,7 @@ export default function Create(props) {
           onCheckDupes={props.onCheckDupes}
         />
       )}
-      {mode === HAVE_ROUTE && <p>Route generated</p>}
+      {mode === HAVE_ROUTE && <h2>Your route is generated.</h2>}
       {mode === ADDING && <Load>Adding task...</Load>}
     </Jumbotron>
   );

@@ -12,7 +12,7 @@ export default function Show(props) {
       <Card.Header>
         <Row>
           <Col>
-            Task No. {task.id}
+            <h4>Task No. {task.id}</h4>
           </Col>
           {props.canEdit && (
             <Col xs="auto">

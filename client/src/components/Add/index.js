@@ -1,9 +1,8 @@
 import Jumbotron from "react-bootstrap/Jumbotron";
-import Spinner from "react-bootstrap/Spinner";
 import Start from "./Start";
 import AddTask from "./AddTask";
+import Load from "../Load";
 import useVisualMode from "../../hooks/useVisualMode";
-
 
 // Visual modes
 const START = "START";
@@ -40,12 +39,7 @@ export default function Create(props) {
         />
       )}
       {mode === HAVE_ROUTE && <p>Route generated</p>}
-      {mode === ADDING && (
-        <>
-          <h2>Adding task</h2>
-          <Spinner animation="border" />
-        </>
-      )}
+      {mode === ADDING && <Load>Adding task...</Load>}
     </Jumbotron>
   );
 }

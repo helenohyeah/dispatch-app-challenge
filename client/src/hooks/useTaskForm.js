@@ -1,31 +1,45 @@
 import { useState } from "react";
 
-export default function useTask(initial) {
-  const [task, setTask] = useState(initial);
+export default function useTaskForm(initial) {
 
-  // Updates form for creating and editing a task
-  const handleTaskChange = (e) => {
-    // console.log(task, e.target)
-    switch (e.target.name) {
-      case "start-lat":
+  const [ task, setTask ] = useState(initial);
+
+  /**
+   * Handle task form changes
+   */
+  const handleChange = (e) => {
+    switch (e.target.id) {
+      case "startCity":
+        setTask(prev => {
+          const start = { ...prev["start"], city: e.target.value }
+          return { ...prev, start };
+        });
+        break;
+      case "startLat":
         setTask((prev) => {
           const start = { ...prev["start"], lat: Number(e.target.value) };
           return { ...prev, start };
         });
         break;
-      case "start-lng":
+      case "startLng":
         setTask((prev) => {
           const start = { ...prev["start"], lng: Number(e.target.value) };
           return { ...prev, start };
         });
         break;
-      case "end-lat":
+      case "endCity":
+        setTask(prev => {
+          const end = { ...prev["end"], city: e.target.value }
+          return { ...prev, end };
+        });
+        break;
+      case "endLat":
         setTask((prev) => {
           const end = { ...prev["end"], lat: Number(e.target.value) };
           return { ...prev, end };
         });
         break;
-      case "end-lng":
+      case "endLng":
         setTask((prev) => {
           const end = { ...prev["end"], lng: Number(e.target.value) };
           return { ...prev, end };
@@ -41,6 +55,6 @@ export default function useTask(initial) {
 
   return {
     task,
-    handleTaskChange,
+    handleChange,
   };
 }

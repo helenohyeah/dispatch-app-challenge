@@ -34,7 +34,7 @@ const [ mapMode, setMapMode ] = useState("VIEW_TASK");
     <Task
       key={task.id}
       data={task}
-      onSave={isDuplicateTask}
+      onCheckDupes={isDuplicateTask}
       onSubmit={updateTask}
       onDelete={deleteTask}
       canEdit={showRoute === false}

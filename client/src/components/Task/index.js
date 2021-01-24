@@ -1,6 +1,7 @@
-import isEqual from "lodash.isequal";
+import Card from "react-bootstrap/Card";
 import Edit from "./Edit";
 import Show from "./Show";
+import Load from "../Load";
 import useVisualMode from "../../hooks/useVisualMode";
 
 // Visual modes
@@ -12,43 +13,31 @@ export default function Task(props) {
 
   const { mode, transition, back } = useVisualMode(SHOW);
 
-  // Validate and save edits
-  const save = (task) => {
-    // console.log('save edits:', task);
-    // console.log(props.onSave(task));
-
-    if (isEqual(props.data, task)) {
-      // No changes transition back
-      transition(SHOW);
-    } else if (props.onSave(task)) {
-      // Duplicate task show alert
-      alert("Duplicate task");
-    } else {
-      // Save task and transition
-      // console.log('saving edits');
-      transition(SAVING);
-      props.onSubmit(task).then(() => transition(SHOW));
-    }
-  };
-
-  // Delete task
-  // DENYS: remove if you don't do more with this later
-  const deleteTask = (id) => {
-    props.onDelete(id);
-  };
-
   return (
-    <article>
+    <Card className="mb-2" style={{ border: `2px solid #${props.data.color}`}}>
       {mode === SHOW && (
         <Show
           task={props.data}
           onEdit={() => transition(EDIT)}
-          onDelete={deleteTask}
+          onDelete={props.onDelete}
           canEdit={props.canEdit}
         />
       )}
-      {mode === EDIT && <Edit task={props.data} onSave={save} />}
-      {mode === SAVING && <p>Saving changes...</p>}
-    </article>
+      {mode === EDIT && (
+        <Edit 
+          task={props.data}
+          onEdit={() => transition(SAVING)}
+          onDone={() => transition(SHOW)}
+          onBack={back}
+          onSubmit={props.onSubmit}
+          onCheckDupes={props.onCheckDupes}
+        />
+      )}
+      {mode === SAVING && (
+        <Card.Body>
+          <Load>Saving changes...</Load>
+        </Card.Body>
+      )}
+    </Card>
   );
 }

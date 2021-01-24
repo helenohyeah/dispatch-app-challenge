@@ -8,7 +8,7 @@ export default function Show(props) {
   const task = props.task;
 
   return (
-    <Card className="mb-2" style={{ border: `2px solid #${task.color}`}}>
+    <>
       <Card.Header>
         <Row>
           <Col>
@@ -24,11 +24,11 @@ export default function Show(props) {
       </Card.Header>
       <Card.Body>
         <Card.Text>
-          <span className="bold">Start Location:</span> {task.start.City} ({task.start.lat}, {task.end.lng})<br />
-          <span className="bold">End Location:</span> {task.end.City} ({task.end.lat}, {task.end.lng})<br />
+          <span className="bold">Start Location:</span> {task.start.city} ({task.start.lat}, {task.end.lng})<br />
+          <span className="bold">End Location:</span> {task.end.city} ({task.end.lat}, {task.end.lng})<br />
           <span className="bold">Freight:</span> {task.freight}
         </Card.Text>
       </Card.Body>
-    </Card>
+    </>
   );
 }

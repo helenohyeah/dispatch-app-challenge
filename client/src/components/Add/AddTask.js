@@ -13,7 +13,7 @@ export default function AddTask(props) {
     task.color = getColor();
     // Submit form and transition
     props.onSubmit(task).then(() => props.onDone());
-  }
+  };
   
   return (
     <>

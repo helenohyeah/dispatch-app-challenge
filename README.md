@@ -4,9 +4,13 @@
 
 DispatchMe is a simple web application that allows a single dispatcher to manage tasks and routes for a driver. Built as my submission for Rose Rocket's Coding Challenge.
 
+<<<<<<< HEAD
 View demo: [https://dispatch-app-challenge.netlify.app/](https://dispatch-app-challenge.netlify.app/)
 
 Server deployed on: [Heroku](https://dispatch-app-challenge.herokuapp.com/api/tasks)
+=======
+Server deployed on [Heroku](https://dispatch-app-challenge.herokuapp.com/api/tasks)
+>>>>>>> 5b1ec2ccda80a777aebe2f04b77647d2075c33e0
 
 ### Built with:
 

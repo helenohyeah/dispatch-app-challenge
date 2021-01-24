@@ -2,7 +2,11 @@
 
 ## About
 
-DispatchMe is a simple web application that allows a single dispatcher to manage tasks and routes for a driver. Built as my submission for Rose Rocket's Coding Challenge
+DispatchMe is a simple web application that allows a single dispatcher to manage tasks and routes for a driver. Built as my submission for Rose Rocket's Coding Challenge.
+
+View demo: [https://dispatch-app-challenge.netlify.app/](https://dispatch-app-challenge.netlify.app/)
+
+Server deployed on: [Heroku](https://dispatch-app-challenge.herokuapp.com/api/tasks)
 
 ### Built with:
 
@@ -43,3 +47,7 @@ Optional:
 
 - To change server url: in your .env file set `REACT_APP_SERVER_BASE_URL`
 - To run tests: `npm test`
+
+## Known Issues
+
+- Compile error where a useEffect has missing dependencies because it only meant to run on first load. Look into useCallback as potential solution.

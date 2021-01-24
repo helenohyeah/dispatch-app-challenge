@@ -31,7 +31,7 @@ export default function useTasks() {
   const [ areTasksLoaded, setAreTasksLoaded ] = useState(false);
 
   // Server url
-  axios.defaults.baseURL = 'http://localhost:8080';
+  axios.defaults.baseURL = process.env.REACT_APP_SERVER_BASE_URL || 'http://localhost:8080';
 
   // Get tasks from server and set state on load
   useEffect(() => {

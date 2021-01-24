@@ -5,9 +5,10 @@ const jsonServer = require('json-server');
 const fs = require('fs');
 const path = require('path');
 const db = require('./db.json');
+require('dotenv').config();
 
 const server = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 const router = jsonServer.router(db);
 

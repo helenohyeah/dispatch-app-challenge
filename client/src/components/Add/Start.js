@@ -22,7 +22,7 @@ export default function Start(props) {
   return (
     <>
       <h2>{message}</h2>
-      <p>You have {taskCount} tasks (max {maxTasks}).</p>
+      <p>You have {taskCount} {taskCount === 1 ? 'task' : 'tasks'} (max {maxTasks}).</p>
       <Button variant="primary" disabled={isAddTaskDisabled} onClick={props.onAddTask}>Add Task</Button>{' '}
       <Button variant="success" disabled={isGenerateRouteDisabled} onClick={props.onGenerate}>Generate Route</Button>
     </>

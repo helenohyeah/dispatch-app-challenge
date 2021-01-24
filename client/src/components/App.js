@@ -1,11 +1,13 @@
 import { useState } from "react";
-import TopNav from "./TopNav";
+import NavTop from "./NavTop";
+import NavBot from "./NavBot";
 import Add from "./Add";
 import Task from "./Task";
 import Map from "./Map";
 import Load from "./Load";
-import BotNav from "./BotNav";
+import Error from "./Error";
 import useTasks from "../hooks/useTasks";
+import useVisualMode from "../hooks/useVisualMode";
 import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import "./App.css";
@@ -14,23 +16,33 @@ import "./App.css";
 const TASKS = "TASKS";
 const ROUTE = "ROUTE";
 
+// Page visual modes
+const LOADING = "LOADING";
+const SHOW = "SHOW";
+const ERROR = "ERROR";
+
 export default function App() {
 
+  // Tracks whether a route is generated and can be shown
   const [ showRoute, setShowRoute ] = useState(false);
   const [ mapMode, setMapMode ] = useState(TASKS);
 
+  // Handle page visual modes
+  const { mode, transition } = useVisualMode(LOADING);
+  const showPage = () => transition(SHOW);
+  const showError = () => transition(ERROR);
+
+  // Task handlers
   const {
     tasks,
     addTask,
     updateTask,
     deleteTask,
-    isDuplicateTask,
-    areTasksLoaded
-  } = useTasks();
+    isDuplicateTask
+  } = useTasks({ showPage, showError });
 
-  console.log(areTasksLoaded);
-  // console.log('App tasks:', tasks);
-  const tasksList = tasks.map((task) => (
+  // Generate task list
+  const tasksList = tasks.map(task => (
     <Task
       key={task.id}
       data={task}
@@ -40,18 +52,22 @@ export default function App() {
       canEdit={showRoute === false}
     />
   ));
-  // console.log("tasksList:", tasksList);
 
   return (
     <>
-      <TopNav id="nav-top" />
+      <NavTop id="nav-top" />
       <Container id="main" fluid>
-      {!areTasksLoaded && (
+      {mode === LOADING && (
         <Jumbotron>
           <Load>Loading...</Load>
         </Jumbotron>
       )}
-      {areTasksLoaded && (
+      {mode === ERROR && (
+        <Jumbotron>
+          <Error>😥 Something went wrong</Error>
+        </Jumbotron>
+      )}
+      {mode === SHOW && (
         <>
           <Add
             taskCount={tasks.length}
@@ -71,7 +87,7 @@ export default function App() {
         </>
       )}
       </Container>
-      <BotNav id="nav-bot" />
+      <NavBot id="nav-bot" />
     </>
   );
 }

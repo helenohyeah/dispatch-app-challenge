@@ -25,10 +25,9 @@ const taskReducer = (state, action) => {
   }
 };
 
-export default function useTasks() {
+export default function useTasks(actions) {
 
   const [ tasks, dispatchTasks ] = useReducer(taskReducer, []);
-  const [ areTasksLoaded, setAreTasksLoaded ] = useState(false);
 
   // Server url
   axios.defaults.baseURL = process.env.REACT_APP_SERVER_BASE_URL || 'http://localhost:8080';
@@ -39,9 +38,12 @@ export default function useTasks() {
       .then(res => {
         const tasksData = res.data;
         dispatchTasks({ type: GET_TASKS, tasksData });
-        setAreTasksLoaded(true);
+        actions.showPage();
       })
-      .catch(err => console.log('Error getting tasks data:', err));
+      .catch(err => {
+        actions.showError(err);
+        console.log('Error getting tasks data:', err);
+      });
   }, []);
 
   // Create a new task and add to state
@@ -82,7 +84,6 @@ export default function useTasks() {
     addTask,
     updateTask,
     deleteTask,
-    isDuplicateTask,
-    areTasksLoaded
+    isDuplicateTask
   };
 }

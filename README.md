@@ -2,7 +2,9 @@
 
 ## About
 
-DispatchMe is a simple web application that allows a single dispatcher to manage tasks and routes for a driver. Built as my submission for Rose Rocket's Coding Challenge
+DispatchMe is a simple web application that allows a single dispatcher to manage tasks and routes for a driver. Built as my submission for Rose Rocket's Coding Challenge.
+
+Server deployed on [Heroku](https://dispatch-app-challenge.herokuapp.com/api/tasks)
 
 ### Built with:
 

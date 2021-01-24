@@ -44,8 +44,8 @@ export default function App() {
 
   return (
     <>
-      <TopNav />
-      <Container fluid>
+      <TopNav id="nav-top" />
+      <Container id="main" fluid>
       {!areTasksLoaded && (
         <Jumbotron>
           <Load>Loading...</Load>
@@ -71,7 +71,7 @@ export default function App() {
         </>
       )}
       </Container>
-      <BotNav />
+      <BotNav id="nav-bot" />
     </>
   );
 }

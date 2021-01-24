@@ -6,31 +6,24 @@ export default function useVisualMode(initial) {
   const [ history, setHistory ] = useState([initial]);
 
   /**
-   * Transition visual modes given the mode and an optional Boolean to skip previous mode (default = false)
+   * Transition to given mode and updates history
    */
-  const transition = (mode, replace = false) => {
+  const transition = (mode) => {
     setMode(mode);
-    if (replace) {
-      const tempHistory = [...history];
-      tempHistory.pop();
-      setHistory([...tempHistory, mode]);
-    } else {
-      setHistory(prev => [ ...prev, mode]);
-    }
+    setHistory(prev => [ ...prev, mode]);
   };
 
   /**
-   * Navigate back to previous mode and update mode history
+   * Transition to previous mode and updates history
    */
   const back = () => {
-    console.log(history);
     if (history.length > 1) {
       const tempHistory = [...history];
       tempHistory.pop();
       setHistory(tempHistory);
       setMode(tempHistory[tempHistory.length - 1]);
     }
-  }
+  };
 
   return {
     mode,

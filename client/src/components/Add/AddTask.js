@@ -1,5 +1,5 @@
 import TaskForm from "../TaskForm";
-import { getColor } from "../../helpers/colorHelpers";
+import { getRandColor } from "../../helpers/colorHelpers";
 
 export default function AddTask(props) {
 
@@ -8,11 +8,11 @@ export default function AddTask(props) {
    */
   const handleAddTask = (task) => {
     // Transition to loading spinner
-    props.onAdd();
+    props.showAdding();
     // Assign task color
-    task.color = getColor();
+    task.color = getRandColor(props.taskCount + 1);
     // Submit form and transition
-    props.onSubmit(task).then(() => props.onDone());
+    props.onSubmit(task).then(() => props.showStart());
   };
   
   return (

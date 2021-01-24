@@ -12,9 +12,12 @@ export default function Map(props) {
   const url = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}`;
   
   const { createTaskMap, createRouteMap, getCenterCoords } = useMap();
+
+  // Create map components
   const { taskMarkers, taskPolylines } = createTaskMap(props.data);
   const { routeMarkers, routePolylines } = createRouteMap(props.data);
 
+  // Set map center coordinates
   const toronto = { lat: 43.653, lng: -79.383 };
   const center = props.data.length !== 0 ? getCenterCoords(props.data) : toronto;
 

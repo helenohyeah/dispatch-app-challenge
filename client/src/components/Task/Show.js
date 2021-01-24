@@ -1,7 +1,5 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 export default function Show(props) {
 
@@ -10,17 +8,7 @@ export default function Show(props) {
   return (
     <>
       <Card.Header>
-        <Row>
-          <Col>
-            <h4>Task No. {task.id}</h4>
-          </Col>
-          {props.canEdit && (
-            <Col xs="auto">
-              <Button variant="primary" size="sm" onClick={props.onEdit}>Edit</Button>{' '}
-              <Button variant="danger" size="sm" onClick={() => props.onDelete(task.id)}>Delete</Button>
-            </Col>
-          )}
-        </Row>
+        <h4>Task No. {task.id}</h4>
       </Card.Header>
       <Card.Body>
         <Card.Text>
@@ -28,6 +16,12 @@ export default function Show(props) {
           <span className="bold">End Location:</span> {task.end.city} ({task.end.lat}, {task.end.lng})<br />
           <span className="bold">Freight:</span> {task.freight}
         </Card.Text>
+          {props.canEdit && (
+            <>
+              <Button variant="primary" onClick={props.onEdit}>Edit</Button>{' '}
+              <Button variant="danger" onClick={() => props.onDelete(task.id)}>Delete</Button>
+            </>
+          )}
       </Card.Body>
     </>
   );

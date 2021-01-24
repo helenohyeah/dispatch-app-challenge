@@ -27,6 +27,14 @@ export default function App() {
   const [ showRoute, setShowRoute ] = useState(false);
   const [ mapMode, setMapMode ] = useState(TASKS);
 
+  /**
+   * Set page to show route map and prevent task changes
+   */
+  const showRouteMap = () => {
+    setShowRoute(true);
+    setMapMode(ROUTE);
+  };
+
   // Handle page visual modes
   const { mode, transition } = useVisualMode(LOADING);
   const showPage = () => transition(SHOW);
@@ -55,8 +63,8 @@ export default function App() {
 
   return (
     <>
-      <NavTop id="nav-top" />
-      <Container id="main" fluid>
+      <NavTop />
+      <Container fluid>
       {mode === LOADING && (
         <Jumbotron>
           <Load>Loading...</Load>
@@ -73,8 +81,7 @@ export default function App() {
             taskCount={tasks.length}
             onSave={isDuplicateTask}
             onSubmit={addTask}
-            onGenerateRoute={() => setShowRoute(true)}
-            setMapMode={setMapMode}
+            onGenerateRoute={showRouteMap}
             onCheckDupes={isDuplicateTask}
           />
           {tasksList}
@@ -87,7 +94,7 @@ export default function App() {
         </>
       )}
       </Container>
-      <NavBot id="nav-bot" />
+      <NavBot />
     </>
   );
 }

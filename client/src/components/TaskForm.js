@@ -31,8 +31,8 @@ export default function TaskForm(props) {
     // Transition back if no changes
     if (isEqual(props.task, task)) props.onBack();
     
-    // Show alert if task is a duplicate
     if (props.onCheckDupes(task)) {
+      // Show alert if task is a duplicate
       e.preventDefault();
       e.stopPropagation();
       setDupe(true);
@@ -85,7 +85,11 @@ export default function TaskForm(props) {
         <Form.Control required type="text" onChange={e => handleChange(e)} value={task.freight} />
       </Form.Group>
 
-      {dupe === true && <Alert variant="danger">This task is identical to an existing task. Please change it and try again.</Alert>}
+      {dupe === true && (
+        <Alert variant="danger">
+          This task is identical to an existing task. Please change it and try again.
+        </Alert>
+      )}
 
       <Button variant="success" type="submit">{props.task ? 'Save' : 'Create'}</Button>{' '}
       <Button variant="secondary" onClick={props.onBack}>Back</Button>

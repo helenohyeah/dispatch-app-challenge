@@ -50,6 +50,8 @@ export default function useTaskForm(initial) {
           return { ...prev, freight: e.target.value };
         });
         break;
+      default:
+        console.log("Error: Unhandled form field");
     }
   };
 

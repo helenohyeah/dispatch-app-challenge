@@ -16,7 +16,7 @@ export default function Edit(props) {
   return (
     <>
       <Card.Header>
-        Edit Task
+        <h4>Edit Task</h4>
       </Card.Header>
       <Card.Body>
         <TaskForm

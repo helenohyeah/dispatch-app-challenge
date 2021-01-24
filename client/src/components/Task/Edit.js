@@ -14,7 +14,7 @@ export default function Edit(props) {
       .then(() => props.onDone())
       .catch(err => {
         props.onError();
-        console.log("Error saving task changes:", err);
+        console.error("Error saving task changes:", err.message);
       });
   };
 

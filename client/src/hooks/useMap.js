@@ -10,16 +10,16 @@ export default function useMap() {
   const endIcon = "http://maps.google.com/mapfiles/kml/paddle/red-blank.png";
 
   /**
-   * Returns a map marker given a coordinate and marker icon url (default: yellow)
+   * Returns a map marker
    */
-  const createMarker = (coord, iconUrl) => {
-    return <Marker key={`${coord.lat},${coord.lng}`} position={coord} icon={iconUrl} />;
+  const createMarker = (key, coord, iconUrl) => {
+    return <Marker key={key} position={coord} icon={iconUrl} />;
   };
 
   /**
    * Returns a map polyline given lat lng coordinates
    */
-  const createPolyline = (coords, options) => <Polyline key={`${coords[0].lat},${coords[0].lng}`} path={coords} options={options} />;
+  const createPolyline = (id, coords, options) => <Polyline key={id} path={coords} options={options} />;
 
   /**
    * Returns task markers and polylines given a list of tasks
@@ -30,9 +30,10 @@ export default function useMap() {
 
     // Create markers and polyline for each task
     tasks.forEach(task => {
-      taskMarkers.push(createMarker(task.start, startIcon));
-      taskMarkers.push(createMarker(task.end,endIcon));
+      taskMarkers.push(createMarker(`s-${task.id}`, task.start, startIcon));
+      taskMarkers.push(createMarker(`e-${task.id}`, task.end,endIcon));
       taskPolylines.push(createPolyline(
+        task.id,
         [task.start, task.end],
         { strokeColor: task.color }
       ));
@@ -57,11 +58,11 @@ export default function useMap() {
     // Create numbered markers at each stop
     routePath.forEach((node, i) => {
       const markerIcon = `http://maps.google.com/mapfiles/kml/paddle/${i + 1}.png`;
-      routeMarkers.push(createMarker(node, markerIcon));
+      routeMarkers.push(createMarker(i, node, markerIcon));
     });
 
     // Create polylines
-    const routePolylines = createPolyline(routePath);
+    const routePolylines = createPolyline(routePath.length, routePath);
     
     return { routeMarkers, routePolylines };
   };

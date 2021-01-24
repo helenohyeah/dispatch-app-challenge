@@ -16,7 +16,7 @@ export default function AddTask(props) {
       .then(() => props.showStart())
       .catch(err => {
         props.showError();
-        console.log("Error adding task:", err);
+        console.error("Error adding task:", err.message);
       });
   };
   

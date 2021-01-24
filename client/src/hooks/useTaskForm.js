@@ -51,7 +51,7 @@ export default function useTaskForm(initial) {
         });
         break;
       default:
-        console.log("Error: Unhandled form field");
+        console.error("Error: Unhandled form field");
     }
   };
 

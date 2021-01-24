@@ -46,7 +46,7 @@ export default function App() {
       .then(() => transition(SHOW))
       .catch((err) => {
         transition(ERROR);
-        console.log("Error getting tasks data:", err);
+        console.error("Error getting tasks data:", err.message);
       });
   }, []);
 

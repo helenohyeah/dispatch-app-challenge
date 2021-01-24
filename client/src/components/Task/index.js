@@ -28,7 +28,7 @@ export default function Task(props) {
     props.onDelete(id)
       .catch(err => {
         transition(ERROR, true);
-        console.log("Error deleting task:", err);
+        console.error("Error deleting task:", err.message);
       });
   }
 

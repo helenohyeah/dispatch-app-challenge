@@ -28,7 +28,7 @@ Server deployed on: [Heroku](https://dispatch-app-challenge.herokuapp.com/api/ta
 ### Server
 
 1. `cd server && npm install` to install server-side dependencies
-2. `npm run` to start the server on [localhost:8080](http://localhost:8080/)
+2. `npm start` to start the server on [localhost:8080](http://localhost:8080/)
 
 Optional:
 
@@ -41,7 +41,7 @@ Optional:
 1. On a second terminal `cd client && npm install` to install client-side dependencies
 2. Generate a [Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key)
 3. Create a .env file and set `REACT_APP_GOOGLE_API_KEY` to your Google Maps API key
-4. `npm run` to start the client on [localhost:3000](http://localhost:3000/)
+4. `npm start` to start the client on [localhost:3000](http://localhost:3000/)
 
 Optional:
 
